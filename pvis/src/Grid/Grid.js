@@ -32,6 +32,8 @@ const Grid = (props) => {
     const [targetX, setTargetX] = useState(59);
     const [targetY, setTargetY] = useState(59);
 
+    console.log(props.sX, startX)
+
     const arrayOfNodes = [];
 
     function setGrid(){
@@ -48,16 +50,19 @@ const Grid = (props) => {
 
     useEffect(() =>{
       
-      function change(color){
+      setStartX(props.sX)
+      setStartY(props.sY)
+
+      async function change(color){
         document.getElementById(`${startY},${startX}`).style.background = color
         document.getElementById(`${targetY},${targetX}`).style.background = color
       }
 
-      change('blue');
-    },[startX,startY])
+      change("blue")
+    },[props.sX, props.sY])
     
     
-
+ 
   return (
     <div className='grid'>
         {arrayOfNodes}
