@@ -1,0 +1,15 @@
+.grid{
+    display: grid;
+    grid-template-columns: repeat(60, 15px);
+}
+
+.node{
+    width: 15px;
+    height: 8.5px;
+    border-color: black;
+    border: 1px solid;
+}
+
+.yes{
+    background-color: blue;
+}
