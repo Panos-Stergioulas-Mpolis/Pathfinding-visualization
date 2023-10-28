@@ -23,8 +23,13 @@ class NodeObj{
 
 class Graph{
   
-  insertNode(i,j){
+  constructor(){
+     this.graphArray = [];
+  }
+  
 
+  NewNode(i,j){
+    
   }
 }
   

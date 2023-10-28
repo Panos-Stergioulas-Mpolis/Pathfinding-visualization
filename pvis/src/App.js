@@ -108,8 +108,12 @@ function App() {
         <div>
            Press E to start and stop erasing
         </div>
-        <button className="vis">
+        <button className="btn">
           Visualize
+        </button>
+
+        <button className="btn" onClick={()=>window.location.reload(false)}>
+          Reset
         </button>
     </div>
       <Grid sX = {Sx} sY = {Sy} tX = {Tx} tY = {Ty}/>

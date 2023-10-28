@@ -19,14 +19,14 @@
     align-items: center;
 }
 
-.vis{
+.btn{
     border: 2px solid rgb(0, 173, 182);
     border-radius: 9px;
     padding: 5px;
     background-color: white;
 }
 
-.vis:hover{
+.btn:hover{
     cursor: pointer;
 }
 
