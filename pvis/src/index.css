@@ -5,16 +5,16 @@
 
 .app{
     display: flex;
-    gap: 70px;
+    flex-direction: column;
+    align-content: space-between;
+    gap: 10px;
 }
 
 .screen{
     display: flex;
-    flex-direction: column;
-    width: fit-content;
-    gap: 10px;
-    margin-top: 10px;
-    margin-left: 10px;
+    justify-content: space-between;
+    border: 2px solid rgb(0, 173, 182);
+    padding: 30px;
 }
 
 .input{

@@ -1,13 +1,15 @@
 .grid{
     display: grid;
-    grid-template-columns: repeat(60, 15px);
+    grid-template-columns: repeat(85, 15px);
+    width: 100%;    
+    /* background: linear-gradient(45deg, rgb(233, 213, 255), rgb(177, 254, 218)); */
 }
 
 .node{
     width: 15px;
-    height: 8.5px;
-    border-color: black;
-    border: 1px solid;
+    height: 15px;
+    border-radius: 2.5px;
+    border: 1px solid rgb(171, 93, 223);
 }
 
 .yes{

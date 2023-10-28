@@ -24,13 +24,13 @@ class Graph{
 
 const Grid = (props) => {
 
-    const[width, setWidth] = useState(60);
-    const[height, setHeight] = useState(60);
+    const[width, setWidth] = useState(85);
+    const[height, setHeight] = useState(30);
 
     const [startX, setStartX] = useState(props.sX);
     const [startY, setStartY] = useState(props.sY);
-    const [targetX, setTargetX] = useState(59);
-    const [targetY, setTargetY] = useState(59);
+    const [targetX, setTargetX] = useState(props.tX);
+    const [targetY, setTargetY] = useState(props.tY);
 
     console.log(props.sX, startX)
 
@@ -48,18 +48,27 @@ const Grid = (props) => {
 
     setGrid();
 
-    useEffect(() =>{
-      
-      setStartX(props.sX)
-      setStartY(props.sY)
-
+    useEffect(() =>{  
       async function change(color){
-        document.getElementById(`${startY},${startX}`).style.background = color
-        document.getElementById(`${targetY},${targetX}`).style.background = color
+        document.getElementById(`${startY},${startX}`).style.background = "white";
+        document.getElementById(`${targetY},${targetX}`).style.background = "white";
       }
 
-      change("blue")
-    },[props.sX, props.sY])
+      change()
+      setStartX(props.sX);
+      setStartY(props.sY);
+      setTargetX(props.tX);
+      setTargetY(props.tY);
+    },[props.sX, props.sY, props.tX, props.tY])
+
+    useEffect(() =>{
+      async function change(color){
+        document.getElementById(`${startY},${startX}`).style.background = "blue"
+        document.getElementById(`${targetY},${targetX}`).style.background = "red"
+      }
+
+      change()
+    },[startX, startY, targetX, targetY])
     
     
  
