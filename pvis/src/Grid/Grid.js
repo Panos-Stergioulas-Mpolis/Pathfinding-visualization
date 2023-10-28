@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 class NodeObj{
 
-    constructor(xValue, yValue, leftN = null, rightN = null, botN = null, topN = null, visited = false, toVisit = false){
+    constructor(xValue = null, yValue = null, leftN = null, rightN = null, botN = null, topN = null, botRN = null, botLN = null, topRN = null, topLN = null, visited = false, toVisit = false){
       this.xValue = xValue;
       this.yValue = yValue;
       this.visited = visited;
@@ -14,11 +14,18 @@ class NodeObj{
       this.topN = topN;
       this.rightN = rightN;
       this.botN = botN;
+      this.botRN = botRN;
+      this.botLN = botLN;
+      this.topRN = topRN;
+      this.topLN = topLN;
     }
   }
 
 class Graph{
   
+  insertNode(i,j){
+
+  }
 }
   
 

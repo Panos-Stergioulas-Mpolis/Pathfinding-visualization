@@ -108,6 +108,9 @@ function App() {
         <div>
            Press E to start and stop erasing
         </div>
+        <button className="vis">
+          Visualize
+        </button>
     </div>
       <Grid sX = {Sx} sY = {Sy} tX = {Tx} tY = {Ty}/>
     </div>

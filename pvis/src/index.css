@@ -16,6 +16,18 @@
     gap: 20px;
     border: 2px solid rgb(0, 173, 182);
     padding: 10px;
+    align-items: center;
+}
+
+.vis{
+    border: 2px solid rgb(0, 173, 182);
+    border-radius: 9px;
+    padding: 5px;
+    background-color: white;
+}
+
+.vis:hover{
+    cursor: pointer;
 }
 
 .input{
