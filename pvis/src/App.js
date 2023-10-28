@@ -17,7 +17,7 @@ function App() {
     <div className="app">
       <div className='screen'>
         <div className='Sx input'>
-            <label>Choose x value for the start (0-84)</label>
+            <label>Choose start(x): </label>
             <input
                 type='number'
                 min={0}
@@ -36,7 +36,7 @@ function App() {
         </div>
         
         <div className='Sy input'>
-            <label>Choose y value for the start (0-29)</label>
+            <label>Choose start(y): </label>
             <input
                 type='number'
                 min={0}
@@ -55,7 +55,7 @@ function App() {
         </div>
 
         <div className='Tx input'>
-            <label>Choose x value for the target (0-84)</label>
+            <label>Choose target(x): </label>
             <input
                 type='number'
                 min={0}
@@ -74,7 +74,7 @@ function App() {
         </div>
         
         <div className='Ty input'>
-            <label>Choose y value for the target (0-29)</label>
+            <label>Choose target(y): </label>
             <input
                 type='number'
                 min={0}
@@ -91,6 +91,22 @@ function App() {
                     
                 }}
             />
+        </div>
+
+        <div className="algorithm">
+          <label>Algorithm: </label>
+          <select>
+            <option>A*</option>
+            <option>Dijkstra</option>
+            <option>BFS</option>
+            <option>DFS</option>
+          </select>
+        </div>
+        <div>
+           Press D to start and stop drawing
+        </div>
+        <div>
+           Press E to start and stop erasing
         </div>
     </div>
       <Grid sX = {Sx} sY = {Sy} tX = {Tx} tY = {Ty}/>

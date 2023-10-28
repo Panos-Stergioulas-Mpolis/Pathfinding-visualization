@@ -12,9 +12,10 @@
 
 .screen{
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
     border: 2px solid rgb(0, 173, 182);
-    padding: 30px;
+    padding: 10px;
 }
 
 .input{

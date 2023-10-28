@@ -32,7 +32,37 @@ const Grid = (props) => {
     const [targetX, setTargetX] = useState(props.tX);
     const [targetY, setTargetY] = useState(props.tY);
 
-    console.log(props.sX, startX)
+    const [draw, setDraw] = useState(false);
+    const [erase, setErase] = useState(false);
+
+    function block(j,i){
+      if(draw === true && !((j === props.sY) && (i === props.sX)) && !((j === props.tY) && (i === props.tX))){
+        document.getElementById(`${j},${i}`).style.backgroundColor = "black";
+      }
+      if(erase === true && !((j === props.sY) && (i === props.sX)) && !((j === props.tY) && (i === props.tX))){
+        document.getElementById(`${j},${i}`).style.backgroundColor = "white";
+      }
+    }
+
+    
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === 'd' || event.key === 'D') {
+        setDraw(!draw);
+        setErase(false);
+      }
+      if (event.key === 'e' || event.key === 'E') {
+        setErase(!erase);
+        setDraw(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress); // Clean up the event listener
+    };
+  }, [draw, erase]);
 
     const arrayOfNodes = [];
 
@@ -40,7 +70,7 @@ const Grid = (props) => {
         for(let j = height -1; j >= 0; j--){
             let tempArr = [];
             for(let i = 0; i < width; i++){
-                tempArr.push(<div className={`node`} id={`${j},${i}`}></div>)
+                tempArr.push(<div  onMouseOver={()=>block(j,i)} className={`node`} id={`${j},${i}`}></div>)
             }
             arrayOfNodes.push(tempArr);
         }
@@ -62,7 +92,7 @@ const Grid = (props) => {
     },[props.sX, props.sY, props.tX, props.tY])
 
     useEffect(() =>{
-      async function change(color){
+      async function change(){
         document.getElementById(`${startY},${startX}`).style.background = "blue"
         document.getElementById(`${targetY},${targetX}`).style.background = "red"
       }
