@@ -3,7 +3,7 @@ import { useState } from 'react';
 import "./grid.css"
 import { useEffect } from 'react';
 
-class NodeObj{
+class Node{
 
     constructor(xValue = null, yValue = null, leftN = null, rightN = null, botN = null, topN = null, botRN = null, botLN = null, topRN = null, topLN = null, visited = false, toVisit = false){
       this.xValue = xValue;
@@ -82,7 +82,7 @@ const Grid = (props) => {
         for(let j = height -1; j >= 0; j--){
             let tempArr = [];
             for(let i = 0; i < width; i++){
-                tempArr.push(<div  onMouseOver={()=>block(j,i)} className={`node`} id={`${j},${i}`}></div>)
+                tempArr.push(<div  onMouseMove={()=>block(j,i)} className={`node`} id={`${j},${i}`}></div>)
             }
             arrayOfNodes.push(tempArr);
         }
