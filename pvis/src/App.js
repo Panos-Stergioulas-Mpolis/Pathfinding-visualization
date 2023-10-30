@@ -25,10 +25,10 @@ function App() {
                 defaultValue={0}
                 onChange={(e) =>{
                     setX(e.target.value);
-                    if(Sx > 84){
+                    if(e.target.value > 84){
                         setX(84);
                     }
-                    if(Sx < 0){
+                    if(e.target.value < 0){
                         setX(0);
                     }
                 }}
@@ -37,17 +37,17 @@ function App() {
         
         <div className='Sy input'>
             <label>Choose start(y): </label>
-            <input
+            <input 
                 type='number'
                 min={0}
                 max={29}
                 defaultValue={0}
                 onChange={(e) =>{
                     setY(e.target.value);
-                    if(Sy > 29){
+                    if(e.target.value > 29){
                         setY(29);
                     }
-                    if(Sy < 0){
+                    if(e.target.value < 0){
                         setY(0);
                     }
                 }}
@@ -63,10 +63,10 @@ function App() {
                 defaultValue={84}
                 onChange={(e) =>{
                     setTX(e.target.value);
-                    if(Tx > 84){
+                    if(e.target.value > 84){
                         setTX(84);
                     }
-                    if(Tx < 0){
+                    if(e.target.value < 0){
                         setTX(0);
                     }
                 }}
@@ -82,10 +82,10 @@ function App() {
                 defaultValue={29}
                 onChange={(e) =>{
                     setTY(e.target.value);
-                    if(Ty > 29){
+                    if(e.target.value > 29){
                         setTY(29);
                     }
-                    if(Ty < 0){
+                    if(e.target.value < 0){
                         setTY(0);
                     }
                     
