@@ -22,17 +22,62 @@ class Node{
   }
 
 class Graph{
-  
-  constructor(){
-     this.graphArray = [];
-  }
-  
 
-  NewNode(i,j){
-    
+  constructor(){
+    this.graphArray = []
+  }
+
+  BFS(i, j, tx, ty) {
+    this.graphArray.push([i, j]);
+    const self = this; // Capture the "this" context
+  
+    function processNextStep() {
+      if (self.graphArray.length > 0) {
+        if (self.graphArray[0][0] === tx && self.graphArray[0][1] === ty) {
+          return;
+        }
+  
+        let node = self.graphArray.shift();
+        let i = node[0];
+        let j = node[1];
+  
+        if(document.getElementById(`${j},${i}`).style.backgroundColor !== "blue"){
+          document.getElementById(`${j},${i}`).style.backgroundColor = "lightgreen";
+        }
+        function changeColorAndPush(directionJ, directionI) {
+          if (j + directionJ >= 0 && j + directionJ <= 29 && i + directionI >= 0 && i + directionI <= 84) {
+            let element = document.getElementById(`${j + directionJ},${i + directionI}`);
+            if (
+              element &&
+              element.style.backgroundColor !== "blue" &&
+              element.style.backgroundColor !== "lightgreen" &&
+              element.style.backgroundColor !== "black" &&
+              element.style.backgroundColor !== "yellow"
+            ) {
+              if(element.style.backgroundColor !== "red"){
+                element.style.backgroundColor = "yellow";
+              }
+              self.graphArray.push([i + directionI, j + directionJ]);
+            }
+          }
+        }
+  
+        changeColorAndPush(1, 0); // Right
+        changeColorAndPush(1, 1); // Right-Down
+        changeColorAndPush(0, 1); // Down
+        changeColorAndPush(-1, 1); // Left-Down
+        changeColorAndPush(-1, 0); // Left
+        changeColorAndPush(-1, -1); // Left-Up
+        changeColorAndPush(0, -1); // Up
+        changeColorAndPush(1, -1); // Right-Up
+  
+        setTimeout(processNextStep, 1.5); // Continue with the next step after a delay
+      }
+    }
+  
+    processNextStep();
   }
 }
-  
 
 const Grid = (props) => {
 
@@ -56,16 +101,26 @@ const Grid = (props) => {
       }
     }
 
+    function Visualize(){
+      let g = new Graph();
+      g.BFS(startX, startY,targetX, targetY);
+    }
+
     
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'd' || event.key === 'D') {
         setDraw(!draw);
         setErase(false);
+        
       }
       if (event.key === 'e' || event.key === 'E') {
         setErase(!erase);
         setDraw(false);
+        
+      }
+      if (event.key === 'v' || event.key === 'V') {
+        Visualize();
       }
     };
 
@@ -82,7 +137,7 @@ const Grid = (props) => {
         for(let j = height -1; j >= 0; j--){
             let tempArr = [];
             for(let i = 0; i < width; i++){
-                tempArr.push(<div  onMouseMove={()=>block(j,i)} className={`node`} id={`${j},${i}`}></div>)
+                tempArr.push(<div onMouseMove={()=>block(j,i)} className={`node`} id={`${j},${i}`}></div>)
             }
             arrayOfNodes.push(tempArr);
         }

@@ -5,11 +5,11 @@ import { useState } from "react";
 
 function App() {
 
-  const [Sx, setX] = useState(0);
-  const [Sy, setY] = useState(0);
+  const [Sx, setX] = useState(40);
+  const [Sy, setY] = useState(14);
 
-  const [Tx, setTX] = useState(84);
-  const [Ty, setTY] = useState(29);
+  const [Tx, setTX] = useState(10);
+  const [Ty, setTY] = useState(20);
 
   console.log(Sx, Sy)
 
@@ -22,7 +22,7 @@ function App() {
                 type='number'
                 min={0}
                 max={84}
-                defaultValue={0}
+                defaultValue={Sx}
                 onChange={(e) =>{
                     setX(e.target.value);
                     if(e.target.value > 84){
@@ -41,7 +41,7 @@ function App() {
                 type='number'
                 min={0}
                 max={29}
-                defaultValue={0}
+                defaultValue={Sy}
                 onChange={(e) =>{
                     setY(e.target.value);
                     if(e.target.value > 29){
@@ -60,7 +60,7 @@ function App() {
                 type='number'
                 min={0}
                 max={84}
-                defaultValue={84}
+                defaultValue={Tx}
                 onChange={(e) =>{
                     setTX(e.target.value);
                     if(e.target.value > 84){
@@ -79,7 +79,7 @@ function App() {
                 type='number'
                 min={0}
                 max={29}
-                defaultValue={29}
+                defaultValue={Ty}
                 onChange={(e) =>{
                     setTY(e.target.value);
                     if(e.target.value > 29){
