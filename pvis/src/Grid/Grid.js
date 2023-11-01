@@ -119,9 +119,7 @@ const Grid = (props) => {
         setDraw(false);
         
       }
-      if (event.key === 'v' || event.key === 'V') {
-        Visualize();
-      }
+      
     };
 
     document.addEventListener('keydown', handleKeyPress);
@@ -166,9 +164,13 @@ const Grid = (props) => {
 
       change()
     },[startX, startY, targetX, targetY])
+
+    useEffect(() => {
+      if (props.StastVis) {
+        Visualize();
+      }
+    }, [props.StastVis]);
     
-    
- 
   return (
     <div className='grid'>
         {arrayOfNodes}

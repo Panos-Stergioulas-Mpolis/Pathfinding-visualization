@@ -11,7 +11,12 @@ function App() {
   const [Tx, setTX] = useState(10);
   const [Ty, setTY] = useState(20);
 
-  console.log(Sx, Sy)
+  const [shouldVis, setShouldVis] = useState(false);
+
+  const handleVisualizeClick = () => {
+    // Trigger the visualization in the Grid component
+    setShouldVis(true);
+  };
 
   return (
     <div className="app">
@@ -108,7 +113,7 @@ function App() {
         <div>
            Press E to start and stop erasing
         </div>
-        <button className="btn">
+        <button className="btn" onClick={handleVisualizeClick}>
           Visualize
         </button>
 
@@ -116,7 +121,7 @@ function App() {
           Reset
         </button>
     </div>
-      <Grid sX = {Sx} sY = {Sy} tX = {Tx} tY = {Ty}/>
+      <Grid sX = {Sx} sY = {Sy} tX = {Tx} tY = {Ty} StastVis={shouldVis}/>
     </div>
   );
 }
