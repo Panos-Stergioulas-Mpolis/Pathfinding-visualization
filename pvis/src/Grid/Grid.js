@@ -71,7 +71,7 @@ class Graph{
         changeColorAndPush(0, -1); // Up
         changeColorAndPush(1, -1); // Right-Up
   
-        setTimeout(processNextStep, 1.5); // Continue with the next step after a delay
+        setTimeout(processNextStep, 1); // Continue with the next step after a delay
       }
     }
   
@@ -143,6 +143,11 @@ const Grid = (props) => {
 
     setGrid();
 
+    useEffect(()=>{
+     
+    },[props.clearBoard])
+    
+
     useEffect(() =>{  
       async function change(color){
         document.getElementById(`${startY},${startX}`).style.background = "white";
@@ -166,10 +171,10 @@ const Grid = (props) => {
     },[startX, startY, targetX, targetY])
 
     useEffect(() => {
-      if (props.StastVis) {
-        Visualize();
-      }
-    }, [props.StastVis]);
+    if (props.StastVis) {
+      Visualize();
+    }
+  }, [props.StastVis]);
     
   return (
     <div className='grid'>

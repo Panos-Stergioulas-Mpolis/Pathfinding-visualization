@@ -5,18 +5,24 @@ import { useState } from "react";
 
 function App() {
 
-  const [Sx, setX] = useState(40);
-  const [Sy, setY] = useState(14);
+  const [Sx, setX] = useState(0);
+  const [Sy, setY] = useState(0);
 
-  const [Tx, setTX] = useState(10);
-  const [Ty, setTY] = useState(20);
+  const [Tx, setTX] = useState(84);
+  const [Ty, setTY] = useState(29);
 
   const [shouldVis, setShouldVis] = useState(false);
+
+  const [clear, setCLear] = useState(false);
 
   const handleVisualizeClick = () => {
     // Trigger the visualization in the Grid component
     setShouldVis(true);
   };
+
+  const handleClearClick = () => {
+    setCLear(true);
+  }
 
   return (
     <div className="app">
@@ -120,8 +126,12 @@ function App() {
         <button className="btn" onClick={()=>window.location.reload(false)}>
           Reset
         </button>
+
+        <button className="btn" onClick={handleClearClick}>
+          Clear Board
+        </button>
     </div>
-      <Grid sX = {Sx} sY = {Sy} tX = {Tx} tY = {Ty} StastVis={shouldVis}/>
+      <Grid sX = {Sx} sY = {Sy} tX = {Tx} tY = {Ty} StastVis={shouldVis} clearBoard={clear}/>
     </div>
   );
 }
