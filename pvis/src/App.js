@@ -15,8 +15,9 @@ function App() {
 
   const [clear, setCLear] = useState(false);
 
+  const [alg, setAlg] = useState("A*")
+
   const handleVisualizeClick = () => {
-    // Trigger the visualization in the Grid component
     setShouldVis(true);
   };
 
@@ -106,7 +107,7 @@ function App() {
 
         <div className="algorithm">
           <label>Algorithm: </label>
-          <select>
+          <select id="algorithm" onChange={(e)=>setAlg(e.target.value)}>
             <option>A*</option>
             <option>Dijkstra</option>
             <option>BFS</option>
@@ -131,7 +132,7 @@ function App() {
           Clear Board
         </button>
     </div>
-      <Grid sX = {Sx} sY = {Sy} tX = {Tx} tY = {Ty} StastVis={shouldVis} clearBoard={clear}/>
+      <Grid sX = {Sx} sY = {Sy} tX = {Tx} tY = {Ty} StastVis={shouldVis} clearBoard={clear} alg = {alg}/>
     </div>
   );
 }

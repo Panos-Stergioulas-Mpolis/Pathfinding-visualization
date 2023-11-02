@@ -236,7 +236,12 @@ const Grid = (props) => {
       console.log(startX, startY)
       function Visualize(){
         let g = new Graph();
-        g.BFS(startX, startY,targetX, targetY);
+        if(props.alg === "BFS"){
+          g.BFS(startX, startY,targetX, targetY);
+        }
+        else if(props.alg === "DFS"){
+          g.DFS(startX, startY,targetX, targetY);
+        }
       }
     if (props.StastVis) {
       Visualize();
