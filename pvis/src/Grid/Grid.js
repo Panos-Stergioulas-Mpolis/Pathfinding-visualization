@@ -27,57 +27,123 @@ class Graph{
     this.graphArray = []
   }
 
-  BFS(i, j, tx, ty) {
-    this.graphArray.push([Number (i),Number (j)]);
-    const self = this; // Capture the "this" context
-  
-    function processNextStep() {
-      if (self.graphArray.length > 0) {
-        if (self.graphArray[0][0] === Number(tx) && self.graphArray[0][1] === Number(ty)) {
-          return;
-        }
-  
-        let node = self.graphArray.shift();
-        let i = node[0];
-        let j = node[1];
-        
-  
-        if(document.getElementById(`${j},${i}`).style.backgroundColor !== "blue"){
-          document.getElementById(`${j},${i}`).style.backgroundColor = "lightgreen";
-        }
-        function changeColorAndPush(directionJ, directionI) {
-          if (j + directionJ >= 0 && j + directionJ <= 29 && i + directionI >= 0 && i + directionI <= 84) {
-            let element = document.getElementById(`${j + directionJ},${i + directionI}`);
-            if (
-              element &&
-              element.style.backgroundColor !== "blue" &&
-              element.style.backgroundColor !== "lightgreen" &&
-              element.style.backgroundColor !== "black" &&
-              element.style.backgroundColor !== "yellow"
-            ) {
-              if(element.style.backgroundColor !== "red"){
-                element.style.backgroundColor = "yellow";
+ 
+    DFS(i,j,tx,ty){
+      this.graphArray.push([Number (i),Number (j)]);
+      const self = this;
+      Search(tx,ty);
+
+      function Search(){
+
+        if(self.graphArray.length > 0){
+          function processNextStep() {
+            if (self.graphArray.length > 0) {
+              if (self.graphArray[0][0] === Number(tx) && self.graphArray[0][1] === Number(ty)) {
+                return;
               }
-              self.graphArray.push([i + directionI, j + directionJ]);
+        
+              let node = self.graphArray.pop();
+              let i = node[0];
+              let j = node[1];
+              
+        
+              if(document.getElementById(`${j},${i}`).style.backgroundColor !== "blue"){
+                document.getElementById(`${j},${i}`).style.backgroundColor = "lightgreen";
+              }
+              function changeColorAndPush(directionJ, directionI) {
+                if (j + directionJ >= 0 && j + directionJ <= 29 && i + directionI >= 0 && i + directionI <= 84) {
+                  let element = document.getElementById(`${j + directionJ},${i + directionI}`);
+                  if (
+                    element &&
+                    element.style.backgroundColor !== "blue" &&
+                    element.style.backgroundColor !== "lightgreen" &&
+                    element.style.backgroundColor !== "black" &&
+                    element.style.backgroundColor !== "yellow"
+                  ) {
+                    if(element.style.backgroundColor !== "red"){
+                      element.style.backgroundColor = "yellow";
+                    }
+                    self.graphArray.push([i + directionI, j + directionJ]);
+                    
+                    Search();
+                    
+                  }
+                }
+              }
+        
+              changeColorAndPush(1, 0); 
+              changeColorAndPush(1, 1); 
+              changeColorAndPush(0, 1); 
+              changeColorAndPush(-1, 1); 
+              changeColorAndPush(-1, 0); 
+              changeColorAndPush(-1, -1); 
+              changeColorAndPush(0, -1); 
+              changeColorAndPush(1, -1);
+        
+              setTimeout(processNextStep, 1); // Continue with the next step after a delay
+            }
+            else{
+              return;
             }
           }
+        
+          processNextStep();
+        
         }
-  
-        changeColorAndPush(1, 0); 
-        changeColorAndPush(1, 1); 
-        changeColorAndPush(0, 1); 
-        changeColorAndPush(-1, 1); 
-        changeColorAndPush(-1, 0); 
-        changeColorAndPush(-1, -1); 
-        changeColorAndPush(0, -1); 
-        changeColorAndPush(1, -1);
-  
-        setTimeout(processNextStep, 1); // Continue with the next step after a delay
       }
     }
-  
-    processNextStep();
-  }
+
+    BFS(i, j, tx, ty) {
+      this.graphArray.push([Number (i),Number (j)]);
+      const self = this; // Capture the "this" context
+    
+      function processNextStep() {
+        if (self.graphArray.length > 0) {
+          if (self.graphArray[0][0] === Number(tx) && self.graphArray[0][1] === Number(ty)) {
+            return;
+          }
+    
+          let node = self.graphArray.shift();
+          let i = node[0];
+          let j = node[1];
+          
+    
+          if(document.getElementById(`${j},${i}`).style.backgroundColor !== "blue"){
+            document.getElementById(`${j},${i}`).style.backgroundColor = "lightgreen";
+          }
+          function changeColorAndPush(directionJ, directionI) {
+            if (j + directionJ >= 0 && j + directionJ <= 29 && i + directionI >= 0 && i + directionI <= 84) {
+              let element = document.getElementById(`${j + directionJ},${i + directionI}`);
+              if (
+                element &&
+                element.style.backgroundColor !== "blue" &&
+                element.style.backgroundColor !== "lightgreen" &&
+                element.style.backgroundColor !== "black" &&
+                element.style.backgroundColor !== "yellow"
+              ) {
+                if(element.style.backgroundColor !== "red"){
+                  element.style.backgroundColor = "yellow";
+                }
+                self.graphArray.push([i + directionI, j + directionJ]);
+              }
+            }
+          }
+    
+          changeColorAndPush(1, 0); 
+          changeColorAndPush(1, 1); 
+          changeColorAndPush(0, 1); 
+          changeColorAndPush(-1, 1); 
+          changeColorAndPush(-1, 0); 
+          changeColorAndPush(-1, -1); 
+          changeColorAndPush(0, -1); 
+          changeColorAndPush(1, -1);
+    
+          setTimeout(processNextStep, 1); // Continue with the next step after a delay
+        }
+      }
+    
+      processNextStep();
+    }
 }
 
 const Grid = (props) => {
