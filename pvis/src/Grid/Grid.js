@@ -28,18 +28,19 @@ class Graph{
   }
 
   BFS(i, j, tx, ty) {
-    this.graphArray.push([i, j]);
+    this.graphArray.push([Number (i),Number (j)]);
     const self = this; // Capture the "this" context
   
     function processNextStep() {
       if (self.graphArray.length > 0) {
-        if (self.graphArray[0][0] === tx && self.graphArray[0][1] === ty) {
+        if (self.graphArray[0][0] === Number(tx) && self.graphArray[0][1] === Number(ty)) {
           return;
         }
   
         let node = self.graphArray.shift();
         let i = node[0];
         let j = node[1];
+        
   
         if(document.getElementById(`${j},${i}`).style.backgroundColor !== "blue"){
           document.getElementById(`${j},${i}`).style.backgroundColor = "lightgreen";
@@ -62,14 +63,14 @@ class Graph{
           }
         }
   
-        changeColorAndPush(1, 0); // Right
-        changeColorAndPush(1, 1); // Right-Down
-        changeColorAndPush(0, 1); // Down
-        changeColorAndPush(-1, 1); // Left-Down
-        changeColorAndPush(-1, 0); // Left
-        changeColorAndPush(-1, -1); // Left-Up
-        changeColorAndPush(0, -1); // Up
-        changeColorAndPush(1, -1); // Right-Up
+        changeColorAndPush(1, 0); 
+        changeColorAndPush(1, 1); 
+        changeColorAndPush(0, 1); 
+        changeColorAndPush(-1, 1); 
+        changeColorAndPush(-1, 0); 
+        changeColorAndPush(-1, -1); 
+        changeColorAndPush(0, -1); 
+        changeColorAndPush(1, -1);
   
         setTimeout(processNextStep, 1); // Continue with the next step after a delay
       }
@@ -99,11 +100,6 @@ const Grid = (props) => {
       if(erase === true && !((j === props.sY) && (i === props.sX)) && !((j === props.tY) && (i === props.tX))){
         document.getElementById(`${j},${i}`).style.backgroundColor = "white";
       }
-    }
-
-    function Visualize(){
-      let g = new Graph();
-      g.BFS(startX, startY,targetX, targetY);
     }
 
     
@@ -171,6 +167,11 @@ const Grid = (props) => {
     },[startX, startY, targetX, targetY])
 
     useEffect(() => {
+      console.log(startX, startY)
+      function Visualize(){
+        let g = new Graph();
+        g.BFS(startX, startY,targetX, targetY);
+      }
     if (props.StastVis) {
       Visualize();
     }
