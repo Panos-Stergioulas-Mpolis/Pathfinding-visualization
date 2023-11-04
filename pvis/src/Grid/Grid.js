@@ -4,22 +4,16 @@ import "./grid.css"
 import { useEffect } from 'react';
 
 class Node{
-
-    constructor(xValue = null, yValue = null, leftN = null, rightN = null, botN = null, topN = null, botRN = null, botLN = null, topRN = null, topLN = null, visited = false, toVisit = false){
-      this.xValue = xValue;
-      this.yValue = yValue;
-      this.visited = visited;
-      this.toVisit = toVisit;
-      this.leftN = leftN;
-      this.topN = topN;
-      this.rightN = rightN;
-      this.botN = botN;
-      this.botRN = botRN;
-      this.botLN = botLN;
-      this.topRN = topRN;
-      this.topLN = topLN;
-    }
+  constructor(x=null,y=null,parent=null){
+    this.x = x;
+    this.y = y;
+    this.parent = parent;
   }
+
+  FindParent(x,y,dirX,dirY){
+    return [x-dirX, y-dirY];
+  }
+}
 
 class Graph{
 
@@ -27,10 +21,14 @@ class Graph{
     this.graphArray = []
   }
 
+
+   
  
     DFS(i,j,tx,ty){
+      
       this.graphArray.push([Number (i),Number (j)]);
       const self = this;
+      const pathArray = [];
       Search(tx,ty);
 
       function Search(){
@@ -39,6 +37,7 @@ class Graph{
           function processNextStep() {
             if (self.graphArray.length > 0) {
               if (self.graphArray[0][0] === Number(tx) && self.graphArray[0][1] === Number(ty)) {
+                
                 return;
               }
         
@@ -49,6 +48,7 @@ class Graph{
         
               if(document.getElementById(`${j},${i}`).style.backgroundColor !== "blue"){
                 document.getElementById(`${j},${i}`).style.backgroundColor = "lightgreen";
+                pathArray.push([i,j]);
               }
               function changeColorAndPush(directionJ, directionI) {
                 if (j + directionJ >= 0 && j + directionJ <= 29 && i + directionI >= 0 && i + directionI <= 84) {
@@ -58,7 +58,8 @@ class Graph{
                     element.style.backgroundColor !== "blue" &&
                     element.style.backgroundColor !== "lightgreen" &&
                     element.style.backgroundColor !== "black" &&
-                    element.style.backgroundColor !== "yellow"
+                    element.style.backgroundColor !== "yellow"&&
+                    element.style.backgroundColor !== "rgb(153, 0, 255)"
                   ) {
                     if(element.style.backgroundColor !== "red"){
                       element.style.backgroundColor = "yellow";
@@ -83,7 +84,7 @@ class Graph{
               setTimeout(processNextStep, 1); // Continue with the next step after a delay
             }
             else{
-              return;
+              return ;
             }
           }
         
@@ -91,15 +92,19 @@ class Graph{
         
         }
       }
+      return pathArray;
     }
 
     BFS(i, j, tx, ty) {
+      
+      this.parentsArray.push(i,j,null,null)
       this.graphArray.push([Number (i),Number (j)]);
       const self = this; // Capture the "this" context
     
       function processNextStep() {
         if (self.graphArray.length > 0) {
           if (self.graphArray[0][0] === Number(tx) && self.graphArray[0][1] === Number(ty)) {
+            
             return;
           }
     
@@ -234,14 +239,33 @@ const Grid = (props) => {
 
     useEffect(() => {
       console.log(startX, startY)
+      let pathArray = [];
       function Visualize(){
         let g = new Graph();
         if(props.alg === "BFS"){
           g.BFS(startX, startY,targetX, targetY);
         }
         else if(props.alg === "DFS"){
-          g.DFS(startX, startY,targetX, targetY);
+          pathArray = g.DFS(startX, startY,targetX, targetY);
+          console.log(pathArray);
         }
+        function visualizePath(pathArray) {
+          if (pathArray.length > 0) {
+            let node = pathArray.shift();
+            let i = Number(node[0]);
+            let j = Number(node[1]);
+            document.getElementById(`${j},${i}`).style.backgroundColor = "rgb(153, 0, 255)";
+        
+            // Use setTimeout to introduce a delay
+            setTimeout(() => {
+              visualizePath(pathArray);
+            }, 50); // Adjust the delay time as needed
+          }
+        }
+        
+        // Call the visualization function
+        visualizePath(pathArray);
+      
       }
     if (props.StastVis) {
       Visualize();
