@@ -3,45 +3,26 @@ import { useState } from 'react';
 import "./grid.css"
 import { useEffect } from 'react';
 
-class Node{
-  constructor(x=null,y=null,parent=null){
-    this.x = x;
-    this.y = y;
-    this.parent = parent;
-  }
+class AlgoVis{
 
-  FindParent(x,y,dirX,dirY){
-    return [x-dirX, y-dirY];
-  }
-}
-
-class Graph{
-
-  constructor(){
-    this.graphArray = []
-  }
-
-
-   
  
     DFS(i,j,tx,ty){
-      
-      this.graphArray.push([Number (i),Number (j)]);
-      const self = this;
+      const graphArray = [];
+      graphArray.push([Number (i),Number (j)]);
       const pathArray = [];
       Search(tx,ty);
 
       function Search(){
 
-        if(self.graphArray.length > 0){
+        if(graphArray.length > 0){
           function processNextStep() {
-            if (self.graphArray.length > 0) {
-              if (self.graphArray[0][0] === Number(tx) && self.graphArray[0][1] === Number(ty)) {
+            if (graphArray.length > 0) {
+              if (graphArray[0][0] === Number(tx) && graphArray[0][1] === Number(ty)) {
                 
                 return;
               }
         
-              let node = self.graphArray.pop();
+              let node = graphArray.pop();
               let i = node[0];
               let j = node[1];
               
@@ -64,7 +45,7 @@ class Graph{
                     if(element.style.backgroundColor !== "red"){
                       element.style.backgroundColor = "yellow";
                     }
-                    self.graphArray.push([i + directionI, j + directionJ]);
+                    graphArray.push([i + directionI, j + directionJ]);
                     
                     Search();
                     
@@ -96,19 +77,18 @@ class Graph{
     }
 
     BFS(i, j, tx, ty) {
+      const graphArray = []
+      graphArray.push([Number (i),Number (j)]);
       
-      this.parentsArray.push(i,j,null,null)
-      this.graphArray.push([Number (i),Number (j)]);
-      const self = this; // Capture the "this" context
     
       function processNextStep() {
-        if (self.graphArray.length > 0) {
-          if (self.graphArray[0][0] === Number(tx) && self.graphArray[0][1] === Number(ty)) {
+        if (graphArray.length > 0) {
+          if (graphArray[0][0] === Number(tx) && graphArray[0][1] === Number(ty)) {
             
             return;
           }
     
-          let node = self.graphArray.shift();
+          let node = graphArray.shift();
           let i = node[0];
           let j = node[1];
           
@@ -129,7 +109,7 @@ class Graph{
                 if(element.style.backgroundColor !== "red"){
                   element.style.backgroundColor = "yellow";
                 }
-                self.graphArray.push([i + directionI, j + directionJ]);
+                  graphArray.push([i + directionI, j + directionJ]);
               }
             }
           }
@@ -241,7 +221,7 @@ const Grid = (props) => {
       console.log(startX, startY)
       let pathArray = [];
       function Visualize(){
-        let g = new Graph();
+        let g = new AlgoVis();
         if(props.alg === "BFS"){
           g.BFS(startX, startY,targetX, targetY);
         }
