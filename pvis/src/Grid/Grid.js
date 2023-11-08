@@ -28,7 +28,7 @@ class Algos {
         break;
       }
       visitedNodes[node.y][node.x] = true;
-      function tryToPushNode(dy,dx){
+      function tryToPushNode(dx,dy){
         if(
           Number(node.x + dx) <= 123 &&
           Number(node.x + dx) >= 0 &&
@@ -52,6 +52,55 @@ class Algos {
       tryToPushNode(-1, 1); 
       tryToPushNode(-1, 0); 
       tryToPushNode(-1, -1);
+    }
+    return endNode;
+  }
+
+  DFS(sx,sy,tx,ty,visitedNodes){
+    let endNode = null;
+    let node = new Node(sx,sy,null);
+    
+    search(node);
+    function search(node){
+      
+      const list = [];
+      if(Number(node.x) === Number(tx) && Number(node.y) === Number(ty)){
+        console.log(endNode + " a")
+        endNode = node;
+      }
+
+      if(visitedNodes[node.y][node.x]){
+        return;
+      }
+      visitedNodes[node.y][node.x] = true;
+      function tryToPushNode(dx,dy){
+        if(
+          Number(node.x + dx) <= 123 &&
+          Number(node.x + dx) >= 0 &&
+          Number(node.y + dy) <= 46 &&
+          Number(node.y + dy) >= 0
+          ){
+            if(document.getElementById(`${node.x + dx},${node.y + dy}`).style.backgroundColor !== "black"){
+              if(visitedNodes[node.y + dy][node.x + dx] === false){
+                visitedNodes[node.y + dy][node.x + dx] = true;
+                let childNode = new Node(node.x + dx, node.y + dy,node)
+                list.push(childNode);
+              }
+            }
+        }
+      }
+      tryToPushNode(0, -1); 
+      tryToPushNode(1, -1); 
+      tryToPushNode(1, 0); 
+      tryToPushNode(1, 1); 
+      tryToPushNode(0, 1); 
+      tryToPushNode(-1, 1); 
+      tryToPushNode(-1, 0); 
+      tryToPushNode(-1, -1);
+      
+      while(list.length > 0){
+        search(list.shift())
+      }
     }
     return endNode;
   }
@@ -88,6 +137,7 @@ class AlgoVis{
                 element &&
                 element.style.backgroundColor !== "blue" &&
                 element.style.backgroundColor !== "lightgreen" &&
+                element.style.backgroundColor !== "rgb(153, 0, 255)" &&
                 element.style.backgroundColor !== "black" &&
                 element.style.backgroundColor !== "yellow"
               ) {
@@ -207,23 +257,32 @@ function setGrid(){
     },[startX, startY, targetX, targetY])
 
     useEffect(() => {
-      let pathArray = [];
       let node = null;
     
       async function Visualize() {
         let g = new AlgoVis();
         let alg = new Algos();
         if (props.alg === "BFS") {
-          await g.BFS(startX, startY, targetX, targetY, visitedNodes);
+          g.BFS(startX, startY, targetX, targetY, visitedNodes);
           node = alg.BFS(startX, startY, targetX, targetY, visitedNodes);
-          visualizePath(node);
+          let pathArr = [];
+          pathArr.push(node);
+          while(node.prev !== null){
+            pathArr.push(node.prev);
+            node = node.prev;
+          }
+          visualizePath(pathArr);
         } else if (props.alg === "DFS") {
-          g.DFS(startX, startY, targetX, targetY);
+          node = alg.DFS(startX, startY, targetX, targetY, visitedNodes);
+          console.log(node + "aa");
+          visualizePath(node);
         }
       }
     
-      async function visualizePath(node) {
-        while (node !== null) {
+      async function visualizePath(arr) {
+      
+        while (arr.length > 0) {
+          let node = arr.pop();
           let i = Number(node.x);
           let j = Number(node.y);
           await new Promise((resolve) => {
@@ -234,7 +293,6 @@ function setGrid(){
               ) {
                 document.getElementById(`${i},${j}`).style.backgroundColor = "rgb(153, 0, 255)";
               }
-              node = node.prev;
               resolve();
             }, 1);
           });
