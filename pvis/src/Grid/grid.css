@@ -18,6 +18,7 @@
     border: 1px solid rgb(171, 93, 223);
     background-color: white;
     transition: 200ms;
+    object-fit: cover;
 }
 
 

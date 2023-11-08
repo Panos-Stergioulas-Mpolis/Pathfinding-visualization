@@ -235,7 +235,7 @@ function setGrid(){
     
 
     useEffect(() =>{  
-      async function change(color){
+      async function change(){
         document.getElementById(`${startX},${startY}`).style.background = "white";
         document.getElementById(`${targetX},${targetY}`).style.background = "white";
       }
@@ -249,8 +249,8 @@ function setGrid(){
 
     useEffect(() =>{
       async function change(){
-        document.getElementById(`${startX},${startY}`).style.background = "blue"
-        document.getElementById(`${targetX},${targetY}`).style.background = "red"
+        document.getElementById(`${startX},${startY}`).style.background = "linear-gradient(240deg, red, purple, green, yellow, blue, black, white, orange)"
+        document.getElementById(`${targetX},${targetY}`).style.background = "linear-gradient(240deg,  red, purple, green, yellow, blue, black, white, magenta)"
       }
 
       change()
@@ -296,7 +296,7 @@ function setGrid(){
                 document.getElementById(`${i},${j}`).style.backgroundColor = "rgb(153, 0, 255)";
               }
               resolve();
-            }, 1);
+            }, 10);
           });
         }
       }

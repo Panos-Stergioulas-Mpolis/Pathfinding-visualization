@@ -52,12 +52,12 @@ function App() {
             <input 
                 type='number'
                 min={0}
-                max={46}
+                max={14}
                 defaultValue={Sy}
                 onChange={(e) =>{
                     setY(e.target.value);
-                    if(e.target.value > 46){
-                        setY(46);
+                    if(e.target.value > 14){
+                        setY(14);
                     }
                     if(e.target.value < 0){
                         setY(0);
@@ -90,12 +90,12 @@ function App() {
             <input
                 type='number'
                 min={0}
-                max={29}
+                max={14}
                 defaultValue={Ty}
                 onChange={(e) =>{
                     setTY(e.target.value);
-                    if(e.target.value > 46){
-                        setTY(46);
+                    if(e.target.value > 14){
+                        setTY(14);
                     }
                     if(e.target.value < 0){
                         setTY(0);
