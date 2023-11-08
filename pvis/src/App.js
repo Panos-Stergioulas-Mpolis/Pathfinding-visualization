@@ -8,8 +8,8 @@ function App() {
   const [Sx, setX] = useState(0);
   const [Sy, setY] = useState(0);
 
-  const [Tx, setTX] = useState(84);
-  const [Ty, setTY] = useState(29);
+  const [Tx, setTX] = useState(123);
+  const [Ty, setTY] = useState(46);
 
   const [shouldVis, setShouldVis] = useState(false);
 
@@ -33,12 +33,12 @@ function App() {
             <input
                 type='number'
                 min={0}
-                max={84}
+                max={123}
                 defaultValue={Sx}
                 onChange={(e) =>{
                     setX(e.target.value);
-                    if(e.target.value > 84){
-                        setX(84);
+                    if(e.target.value > 123){
+                        setX(123);
                     }
                     if(e.target.value < 0){
                         setX(0);
@@ -52,12 +52,12 @@ function App() {
             <input 
                 type='number'
                 min={0}
-                max={29}
+                max={46}
                 defaultValue={Sy}
                 onChange={(e) =>{
                     setY(e.target.value);
-                    if(e.target.value > 29){
-                        setY(29);
+                    if(e.target.value > 46){
+                        setY(46);
                     }
                     if(e.target.value < 0){
                         setY(0);
@@ -71,12 +71,12 @@ function App() {
             <input
                 type='number'
                 min={0}
-                max={84}
+                max={123}
                 defaultValue={Tx}
                 onChange={(e) =>{
                     setTX(e.target.value);
-                    if(e.target.value > 84){
-                        setTX(84);
+                    if(e.target.value > 123){
+                        setTX(123);
                     }
                     if(e.target.value < 0){
                         setTX(0);
@@ -94,8 +94,8 @@ function App() {
                 defaultValue={Ty}
                 onChange={(e) =>{
                     setTY(e.target.value);
-                    if(e.target.value > 29){
-                        setTY(29);
+                    if(e.target.value > 46){
+                        setTY(46);
                     }
                     if(e.target.value < 0){
                         setTY(0);

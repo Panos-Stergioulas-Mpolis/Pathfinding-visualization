@@ -3,102 +3,87 @@ import { useState } from 'react';
 import "./grid.css"
 import { useEffect } from 'react';
 
-class AlgoVis{
+class Node{
+  constructor(x,y,prev=null,){
+    this.x = x;
+    this.y = y;
+    this.prev = prev;
+  }
+}
 
- 
-    DFS(i,j,tx,ty){
-      const graphArray = [];
-      graphArray.push([Number (i),Number (j)]);
-      const pathArray = [];
-      Search(tx,ty);
+class Algos {
+  BFS(sx,sy,tx,ty,visitedNodes){
+    let endNode = null;
+    let startNode = new Node(Number(sx),Number(sy));
+    let queue = [];
+    queue.push(startNode);
+    let node = null;
 
-      function Search(){
+    while(queue.length > 0){
 
-        if(graphArray.length > 0){
-          function processNextStep() {
-            if (graphArray.length > 0) {
-              if (graphArray[0][0] === Number(tx) && graphArray[0][1] === Number(ty)) {
-                
-                return;
+      node = queue.shift();
+     
+      if(Number(node.x) === Number(tx) && Number(node.y) === Number(ty)){
+        endNode = node;
+        break;
+      }
+      visitedNodes[node.y][node.x] = true;
+      function tryToPushNode(dy,dx){
+        if(
+          Number(node.x + dx) <= 123 &&
+          Number(node.x + dx) >= 0 &&
+          Number(node.y + dy) <= 46 &&
+          Number(node.y + dy) >= 0
+          ){
+            if(document.getElementById(`${node.x + dx},${node.y + dy}`).style.backgroundColor !== "black"){
+              if(visitedNodes[node.y + dy][node.x + dx] === false){
+                let nodeChild = new Node(node.x + dx, node.y + dy, node);
+                queue.push(nodeChild);
+                visitedNodes[node.y + dy][node.x + dx] = true;
               }
-        
-              let node = graphArray.pop();
-              let i = node[0];
-              let j = node[1];
-              
-        
-              if(document.getElementById(`${j},${i}`).style.backgroundColor !== "blue"){
-                document.getElementById(`${j},${i}`).style.backgroundColor = "lightgreen";
-                pathArray.push([i,j]);
-              }
-              function changeColorAndPush(directionJ, directionI) {
-                if (j + directionJ >= 0 && j + directionJ <= 29 && i + directionI >= 0 && i + directionI <= 84) {
-                  let element = document.getElementById(`${j + directionJ},${i + directionI}`);
-                  if (
-                    element &&
-                    element.style.backgroundColor !== "blue" &&
-                    element.style.backgroundColor !== "lightgreen" &&
-                    element.style.backgroundColor !== "black" &&
-                    element.style.backgroundColor !== "yellow"&&
-                    element.style.backgroundColor !== "rgb(153, 0, 255)"
-                  ) {
-                    if(element.style.backgroundColor !== "red"){
-                      element.style.backgroundColor = "yellow";
-                    }
-                    graphArray.push([i + directionI, j + directionJ]);
-                    
-                    Search();
-                    
-                  }
-                }
-              }
-        
-              changeColorAndPush(1, 0); 
-              changeColorAndPush(1, 1); 
-              changeColorAndPush(0, 1); 
-              changeColorAndPush(-1, 1); 
-              changeColorAndPush(-1, 0); 
-              changeColorAndPush(-1, -1); 
-              changeColorAndPush(0, -1); 
-              changeColorAndPush(1, -1);
-        
-              setTimeout(processNextStep, 1); // Continue with the next step after a delay
             }
-            else{
-              return ;
-            }
-          }
-        
-          processNextStep();
-        
         }
       }
-      return pathArray;
+      tryToPushNode(0, -1); 
+      tryToPushNode(1, -1); 
+      tryToPushNode(1, 0); 
+      tryToPushNode(1, 1); 
+      tryToPushNode(0, 1); 
+      tryToPushNode(-1, 1); 
+      tryToPushNode(-1, 0); 
+      tryToPushNode(-1, -1);
     }
+    return endNode;
+  }
+}
+
+  
+
+class AlgoVis{
+
 
     BFS(i, j, tx, ty) {
       const graphArray = []
       graphArray.push([Number (i),Number (j)]);
-      
     
       function processNextStep() {
         if (graphArray.length > 0) {
-          if (graphArray[0][0] === Number(tx) && graphArray[0][1] === Number(ty)) {
-            
-            return;
-          }
+          
     
           let node = graphArray.shift();
           let i = node[0];
           let j = node[1];
-          
-    
-          if(document.getElementById(`${j},${i}`).style.backgroundColor !== "blue"){
-            document.getElementById(`${j},${i}`).style.backgroundColor = "lightgreen";
+          if (i === Number(tx) && j === Number(ty)) {
+            
+            return;
           }
-          function changeColorAndPush(directionJ, directionI) {
-            if (j + directionJ >= 0 && j + directionJ <= 29 && i + directionI >= 0 && i + directionI <= 84) {
-              let element = document.getElementById(`${j + directionJ},${i + directionI}`);
+    
+          if(document.getElementById(`${i},${j}`).style.backgroundColor !== "blue"){
+            document.getElementById(`${i},${j}`).style.backgroundColor = "lightgreen";
+          }
+          function changeColorAndPush(directionI, directionJ) {
+            if (j + directionJ >= 0 && j + directionJ <= 46 && i + directionI >= 0 && i + directionI <= 123) {
+              let element = document.getElementById(`${i + directionI},${j + directionJ}`);
               if (
                 element &&
                 element.style.backgroundColor !== "blue" &&
@@ -114,14 +99,14 @@ class AlgoVis{
             }
           }
     
+          changeColorAndPush(0, -1); 
+          changeColorAndPush(1, -1); 
           changeColorAndPush(1, 0); 
           changeColorAndPush(1, 1); 
           changeColorAndPush(0, 1); 
           changeColorAndPush(-1, 1); 
           changeColorAndPush(-1, 0); 
-          changeColorAndPush(-1, -1); 
-          changeColorAndPush(0, -1); 
-          changeColorAndPush(1, -1);
+          changeColorAndPush(-1, -1);
     
           setTimeout(processNextStep, 1); // Continue with the next step after a delay
         }
@@ -133,8 +118,8 @@ class AlgoVis{
 
 const Grid = (props) => {
 
-    const[width, setWidth] = useState(85);
-    const[height, setHeight] = useState(30);
+    const[width, setWidth] = useState(124);
+    const[height, setHeight] = useState(47);
 
     const [startX, setStartX] = useState(props.sX);
     const [startY, setStartY] = useState(props.sY);
@@ -144,12 +129,12 @@ const Grid = (props) => {
     const [draw, setDraw] = useState(false);
     const [erase, setErase] = useState(false);
 
-    function block(j,i){
+    function block(i,j){
       if(draw === true && !((j === props.sY) && (i === props.sX)) && !((j === props.tY) && (i === props.tX))){
-        document.getElementById(`${j},${i}`).style.backgroundColor = "black";
+        document.getElementById(`${i},${j}`).style.backgroundColor = "black";
       }
       if(erase === true && !((j === props.sY) && (i === props.sX)) && !((j === props.tY) && (i === props.tX))){
-        document.getElementById(`${j},${i}`).style.backgroundColor = "white";
+        document.getElementById(`${i},${j}`).style.backgroundColor = "white";
       }
     }
 
@@ -177,16 +162,20 @@ const Grid = (props) => {
   }, [draw, erase]);
 
     const arrayOfNodes = [];
+    const visitedNodes = [];
 
-    function setGrid(){
-        for(let j = height -1; j >= 0; j--){
-            let tempArr = [];
-            for(let i = 0; i < width; i++){
-                tempArr.push(<div onMouseMove={()=>block(j,i)} className={`node`} id={`${j},${i}`}></div>)
-            }
-            arrayOfNodes.push(tempArr);
-        }
+function setGrid(){
+     for(let i = 0; i < height; i++){
+      let tempArr = [];
+      visitedNodes[i] = []; 
+      for(let j = 0; j < width; j++){
+        tempArr.push(<div onMouseMove={()=>block(j,i)} className={"node"} id={`${j},${i}`}></div>);
+        visitedNodes[i][j] = false; 
+      }
+      arrayOfNodes.push(<div className='line'>{tempArr}</div>);
     }
+}
+
 
     setGrid();
 
@@ -197,8 +186,8 @@ const Grid = (props) => {
 
     useEffect(() =>{  
       async function change(color){
-        document.getElementById(`${startY},${startX}`).style.background = "white";
-        document.getElementById(`${targetY},${targetX}`).style.background = "white";
+        document.getElementById(`${startX},${startY}`).style.background = "white";
+        document.getElementById(`${targetX},${targetY}`).style.background = "white";
       }
 
       change()
@@ -210,47 +199,53 @@ const Grid = (props) => {
 
     useEffect(() =>{
       async function change(){
-        document.getElementById(`${startY},${startX}`).style.background = "blue"
-        document.getElementById(`${targetY},${targetX}`).style.background = "red"
+        document.getElementById(`${startX},${startY}`).style.background = "blue"
+        document.getElementById(`${targetX},${targetY}`).style.background = "red"
       }
 
       change()
     },[startX, startY, targetX, targetY])
 
     useEffect(() => {
-      console.log(startX, startY)
       let pathArray = [];
-      function Visualize(){
+      let node = null;
+    
+      async function Visualize() {
         let g = new AlgoVis();
-        if(props.alg === "BFS"){
-          g.BFS(startX, startY,targetX, targetY);
+        let alg = new Algos();
+        if (props.alg === "BFS") {
+          await g.BFS(startX, startY, targetX, targetY, visitedNodes);
+          node = alg.BFS(startX, startY, targetX, targetY, visitedNodes);
+          visualizePath(node);
+        } else if (props.alg === "DFS") {
+          g.DFS(startX, startY, targetX, targetY);
         }
-        else if(props.alg === "DFS"){
-          pathArray = g.DFS(startX, startY,targetX, targetY);
-          console.log(pathArray);
-        }
-        function visualizePath(pathArray) {
-          if (pathArray.length > 0) {
-            let node = pathArray.shift();
-            let i = Number(node[0]);
-            let j = Number(node[1]);
-            document.getElementById(`${j},${i}`).style.backgroundColor = "rgb(153, 0, 255)";
-        
-            // Use setTimeout to introduce a delay
-            setTimeout(() => {
-              visualizePath(pathArray);
-            }, 50); // Adjust the delay time as needed
-          }
-        }
-        
-        // Call the visualization function
-        visualizePath(pathArray);
-      
       }
-    if (props.StastVis) {
-      Visualize();
-    }
-  }, [props.StastVis]);
+    
+      async function visualizePath(node) {
+        while (node !== null) {
+          let i = Number(node.x);
+          let j = Number(node.y);
+          await new Promise((resolve) => {
+            setTimeout(() => {
+              if (
+                document.getElementById(`${i},${j}`).style.backgroundColor !== "red" &&
+                document.getElementById(`${i},${j}`).style.backgroundColor !== "blue"
+              ) {
+                document.getElementById(`${i},${j}`).style.backgroundColor = "rgb(153, 0, 255)";
+              }
+              node = node.prev;
+              resolve();
+            }, 1);
+          });
+        }
+      }
+    
+      if (props.StastVis) {
+         Visualize();
+      }
+    }, [props.StastVis]);
+    
     
   return (
     <div className='grid'>

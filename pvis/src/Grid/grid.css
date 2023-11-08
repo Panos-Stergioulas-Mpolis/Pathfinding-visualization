@@ -1,14 +1,18 @@
-.grid{
-    display: grid;
-    grid-template-columns: repeat(85, 15px);
-    width: 100%;    
+.line{
+    display: flex;
+    width: 100%;
     /* background: linear-gradient(45deg, rgb(233, 213, 255), rgb(177, 254, 218)); */
 }
 
+.grid{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 .node{
-    width: 15px;
-    height: 15px;
-    border-radius: 2.5px;
+    width: 9px;
+    height: 9px;
     border: 1px solid rgb(171, 93, 223);
     background-color: white;
     transition: 200ms;
