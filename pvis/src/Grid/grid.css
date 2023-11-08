@@ -13,8 +13,8 @@
 }
 
 .node{
-    width: 9px;
-    height: 9px;
+    width: 30px;
+    height: 30px;
     border: 1px solid rgb(171, 93, 223);
     background-color: white;
     transition: 200ms;

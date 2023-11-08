@@ -8,8 +8,8 @@ function App() {
   const [Sx, setX] = useState(0);
   const [Sy, setY] = useState(0);
 
-  const [Tx, setTX] = useState(123);
-  const [Ty, setTY] = useState(46);
+  const [Tx, setTX] = useState(49);
+  const [Ty, setTY] = useState(14);
 
   const [shouldVis, setShouldVis] = useState(false);
 
@@ -33,12 +33,12 @@ function App() {
             <input
                 type='number'
                 min={0}
-                max={123}
+                max={49}
                 defaultValue={Sx}
                 onChange={(e) =>{
                     setX(e.target.value);
-                    if(e.target.value > 123){
-                        setX(123);
+                    if(e.target.value > 49){
+                        setX(49);
                     }
                     if(e.target.value < 0){
                         setX(0);
@@ -71,12 +71,12 @@ function App() {
             <input
                 type='number'
                 min={0}
-                max={123}
+                max={49}
                 defaultValue={Tx}
                 onChange={(e) =>{
                     setTX(e.target.value);
-                    if(e.target.value > 123){
-                        setTX(123);
+                    if(e.target.value > 49){
+                        setTX(49);
                     }
                     if(e.target.value < 0){
                         setTX(0);

@@ -30,9 +30,9 @@ class Algos {
       visitedNodes[node.y][node.x] = true;
       function tryToPushNode(dx,dy){
         if(
-          Number(node.x + dx) <= 123 &&
+          Number(node.x + dx) <= 49 &&
           Number(node.x + dx) >= 0 &&
-          Number(node.y + dy) <= 46 &&
+          Number(node.y + dy) <= 14 &&
           Number(node.y + dy) >= 0
           ){
             if(document.getElementById(`${node.x + dx},${node.y + dy}`).style.backgroundColor !== "black"){
@@ -75,9 +75,9 @@ class Algos {
       visitedNodes[node.y][node.x] = true;
       function tryToPushNode(dx,dy){
         if(
-          Number(node.x + dx) <= 123 &&
+          Number(node.x + dx) <= 49 &&
           Number(node.x + dx) >= 0 &&
-          Number(node.y + dy) <= 46 &&
+          Number(node.y + dy) <= 14 &&
           Number(node.y + dy) >= 0
           ){
             if(document.getElementById(`${node.x + dx},${node.y + dy}`).style.backgroundColor !== "black"){
@@ -111,7 +111,7 @@ class Algos {
 class AlgoVis{
 
 
-    BFS(i, j, tx, ty) {
+    BFS(i, j, tx, ty, callback) {
       const graphArray = []
       graphArray.push([Number (i),Number (j)]);
     
@@ -123,7 +123,7 @@ class AlgoVis{
           let i = node[0];
           let j = node[1];
           if (i === Number(tx) && j === Number(ty)) {
-            
+            callback();
             return;
           }
     
@@ -131,7 +131,7 @@ class AlgoVis{
             document.getElementById(`${i},${j}`).style.backgroundColor = "lightgreen";
           }
           function changeColorAndPush(directionI, directionJ) {
-            if (j + directionJ >= 0 && j + directionJ <= 46 && i + directionI >= 0 && i + directionI <= 123) {
+            if (j + directionJ >= 0 && j + directionJ <= 14 && i + directionI >= 0 && i + directionI <= 49) {
               let element = document.getElementById(`${i + directionI},${j + directionJ}`);
               if (
                 element &&
@@ -168,8 +168,8 @@ class AlgoVis{
 
 const Grid = (props) => {
 
-    const[width, setWidth] = useState(124);
-    const[height, setHeight] = useState(47);
+    const[width, setWidth] = useState(50);
+    const[height, setHeight] = useState(15);
 
     const [startX, setStartX] = useState(props.sX);
     const [startY, setStartY] = useState(props.sY);
@@ -263,15 +263,17 @@ function setGrid(){
         let g = new AlgoVis();
         let alg = new Algos();
         if (props.alg === "BFS") {
-          g.BFS(startX, startY, targetX, targetY, visitedNodes);
-          node = alg.BFS(startX, startY, targetX, targetY, visitedNodes);
-          let pathArr = [];
-          pathArr.push(node);
-          while(node.prev !== null){
-            pathArr.push(node.prev);
-            node = node.prev;
-          }
-          visualizePath(pathArr);
+          g.BFS(startX, startY, targetX, targetY, () => {
+            // This callback is called when BFS traversal is complete
+            node = alg.BFS(startX, startY, targetX, targetY, visitedNodes);
+            let pathArr = [];
+            pathArr.push(node);
+            while (node.prev !== null) {
+              pathArr.push(node.prev);
+              node = node.prev;
+            }
+            visualizePath(pathArr);
+          });
         } else if (props.alg === "DFS") {
           node = alg.DFS(startX, startY, targetX, targetY, visitedNodes);
           console.log(node + "aa");
