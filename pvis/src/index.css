@@ -1,36 +1,36 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-.app{
-    display: flex;
-    flex-direction: column;
-    align-content: space-between;
-    gap: 10px;
+.app {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  gap: 10px;
 }
 
-.screen{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    border: 2px solid rgb(0, 173, 182);
-    padding: 10px;
-    align-items: center;
+.screen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  border: 2px solid rgb(0, 173, 182);
+  padding: 10px;
+  align-items: center;
 }
 
-.btn{
-    border: 2px solid rgb(0, 173, 182);
-    border-radius: 9px;
-    padding: 5px;
-    background-color: white;
+.btn {
+  border: 2px solid rgb(0, 173, 182);
+  border-radius: 9px;
+  padding: 5px;
+  background-color: white;
 }
 
-.btn:hover{
-    cursor: pointer;
+.btn:hover {
+  cursor: pointer;
 }
 
-.input{
-    display: flex;
-    gap: 5px;
+.input {
+  display: flex;
+  gap: 5px;
 }
