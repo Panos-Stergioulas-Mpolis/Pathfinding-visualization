@@ -80,6 +80,8 @@ class Algos {
         return;
       }
       visitedNodes[node.x][node.y] = true;
+      document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
+        "yellow";
       console.log(node.x + " ihi " + node.y);
       function tryToPushNode(dx, dy) {
         if (
@@ -153,7 +155,6 @@ class AlgoVis {
               element &&
               element.style.backgroundColor !== "blue" &&
               element.style.backgroundColor !== "lightgreen" &&
-              element.style.backgroundColor !== "rgb(153, 0, 255)" &&
               element.style.backgroundColor !== "black" &&
               element.style.backgroundColor !== "yellow"
             ) {
@@ -344,7 +345,7 @@ const Grid = (props) => {
                 "rgb(153, 0, 255)";
             }
             resolve();
-          }, 10);
+          }, 50);
         });
       }
     }
