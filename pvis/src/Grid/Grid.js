@@ -80,8 +80,21 @@ class Algos {
         return;
       }
       visitedNodes[node.x][node.y] = true;
-      document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
-        "yellow";
+      if (
+        document.getElementById(`${node.x},${node.y}`).style.backgroundColor !==
+        "rgb(153, 0, 255)"
+      ) {
+        if (
+          document.getElementById(`${node.x},${node.y}`).style
+            .backgroundColor === "lightgreen"
+        ) {
+          document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
+            "orange";
+        } else {
+          document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
+            "#ff007f";
+        }
+      }
       console.log(node.x + " ihi " + node.y);
       function tryToPushNode(dx, dy) {
         if (
@@ -303,7 +316,7 @@ const Grid = (props) => {
             pathArr.push(node.prev);
             node = node.prev;
           }
-          visualizePath(pathArr);
+          visualizePath(pathArr, true);
         });
       } else if (props.alg === "DFS") {
         node = alg.DFS(
@@ -321,14 +334,14 @@ const Grid = (props) => {
             pathArr.push(node.prev);
             node = node.prev;
           }
-          visualizePath(pathArr);
+          visualizePath(pathArr, false, true);
         } else {
           console.log("No path found.");
         }
       }
     }
 
-    async function visualizePath(arr) {
+    async function visualizePath(arr, purple = false, lblue = false) {
       while (arr.length > 0) {
         let node = arr.pop();
         let i = Number(node.x);
@@ -341,8 +354,29 @@ const Grid = (props) => {
               document.getElementById(`${i},${j}`).style.backgroundColor !==
                 "blue"
             ) {
-              document.getElementById(`${i},${j}`).style.backgroundColor =
-                "rgb(153, 0, 255)";
+              if (purple) {
+                if (
+                  document.getElementById(`${i},${j}`).style.backgroundColor ===
+                  "#3399ff"
+                ) {
+                  document.getElementById(`${i},${j}`).style.backgroundColor =
+                    "red";
+                } else {
+                  document.getElementById(`${i},${j}`).style.backgroundColor =
+                    "rgb(153, 0, 255)";
+                }
+              } else if (lblue) {
+                if (
+                  document.getElementById(`${i},${j}`).style.backgroundColor ===
+                  "rgb(153, 0, 255)"
+                ) {
+                  document.getElementById(`${i},${j}`).style.backgroundColor =
+                    "red";
+                } else {
+                  document.getElementById(`${i},${j}`).style.backgroundColor =
+                    "#3399ff";
+                }
+              }
             }
             resolve();
           }, 50);
