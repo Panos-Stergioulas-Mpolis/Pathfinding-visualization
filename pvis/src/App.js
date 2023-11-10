@@ -16,6 +16,9 @@ function App() {
 
   const [alg, setAlg] = useState("A*");
 
+  const [totalNodes, setTOtalNodes] = useState(0);
+  const [pathLenght, setPathLength] = useState(0);
+
   const handleVisualizeClick = () => {
     setShouldVis(true);
   };
@@ -24,87 +27,15 @@ function App() {
     setCLear(true);
   };
 
+  const handleStats = (x, y) => {
+    setTOtalNodes(x);
+    setPathLength(y);
+  };
+
   return (
     <div className="app">
       <div className="screen">
-        <div className="Sx input">
-          <label>Choose start(x): </label>
-          <input
-            type="number"
-            min={0}
-            max={49}
-            defaultValue={Sx}
-            onChange={(e) => {
-              setX(e.target.value);
-              if (e.target.value > 49) {
-                setX(49);
-              }
-              if (e.target.value < 0) {
-                setX(0);
-              }
-            }}
-          />
-        </div>
-
-        <div className="Sy input">
-          <label>Choose start(y): </label>
-          <input
-            type="number"
-            min={0}
-            max={14}
-            defaultValue={Sy}
-            onChange={(e) => {
-              setY(e.target.value);
-              if (e.target.value > 14) {
-                setY(14);
-              }
-              if (e.target.value < 0) {
-                setY(0);
-              }
-            }}
-          />
-        </div>
-
-        <div className="Tx input">
-          <label>Choose target(x): </label>
-          <input
-            type="number"
-            min={0}
-            max={49}
-            defaultValue={Tx}
-            onChange={(e) => {
-              setTX(e.target.value);
-              if (e.target.value > 49) {
-                setTX(49);
-              }
-              if (e.target.value < 0) {
-                setTX(0);
-              }
-            }}
-          />
-        </div>
-
-        <div className="Ty input">
-          <label>Choose target(y): </label>
-          <input
-            type="number"
-            min={0}
-            max={14}
-            defaultValue={Ty}
-            onChange={(e) => {
-              setTY(e.target.value);
-              if (e.target.value > 14) {
-                setTY(14);
-              }
-              if (e.target.value < 0) {
-                setTY(0);
-              }
-            }}
-          />
-        </div>
-
         <div className="algorithm">
-          <label>Algorithm: </label>
           <select
             id="algorithm"
             onChange={(e) => {
@@ -118,19 +49,20 @@ function App() {
             <option>DFS</option>
           </select>
         </div>
-        <div>Press D to start and stop drawing</div>
-        <div>Press E to start and stop erasing</div>
-        <button className="btn" onClick={handleVisualizeClick}>
-          Visualize
-        </button>
 
-        <button className="btn" onClick={() => window.location.reload(false)}>
+        <div className="btn" onClick={() => window.location.reload(false)}>
           Reset
-        </button>
+        </div>
 
-        <button className="btn" onClick={handleClearClick}>
+        <div className="btn" onClick={handleClearClick}>
           Clear Board
-        </button>
+        </div>
+        <div className="btn vis" onClick={handleVisualizeClick}>
+          Visualize
+        </div>
+        <span className="stats">Total Nodes Visited: {totalNodes}</span>
+
+        <span className="stats">Total Path Length: {pathLenght}</span>
       </div>
       <Grid
         sX={Sx}
@@ -140,6 +72,7 @@ function App() {
         StastVis={shouldVis}
         clearBoard={clear}
         alg={alg}
+        Stats={handleStats}
       />
     </div>
   );

@@ -13,6 +13,7 @@ class Node {
 
 class Algos {
   BFS(sx, sy, tx, ty, visitedNodes) {
+    let nodesVisited = 0;
     let endNode = null;
     let startNode = new Node(Number(sx), Number(sy));
     let queue = [];
@@ -21,12 +22,13 @@ class Algos {
 
     while (queue.length > 0) {
       node = queue.shift();
-
+      visitedNodes[node.x][node.y] = true;
+      nodesVisited++;
       if (Number(node.x) === Number(tx) && Number(node.y) === Number(ty)) {
         endNode = node;
         break;
       }
-      visitedNodes[node.x][node.y] = true;
+
       function tryToPushNode(dx, dy) {
         if (
           Number(node.x + dx) <= 49 &&
@@ -55,11 +57,12 @@ class Algos {
       tryToPushNode(-1, 0);
       tryToPushNode(-1, -1);
     }
-    return endNode;
+    return [endNode, nodesVisited];
   }
 
   DFS(sx, sy, tx, ty, visitedNodes) {
     let endNode = null;
+    let totalNodesVisited = 0;
     let node = new Node(sx, sy, null);
 
     function search(node) {
@@ -68,33 +71,16 @@ class Algos {
         return;
       }
 
+      visitedNodes[node.x][node.y] = true;
       const list = [];
-      console.log(node.x + " ok " + node.y);
+      totalNodesVisited++;
+      document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
+        "#ff007f";
       if (node.x == Number(tx) && node.y == Number(ty)) {
         endNode = node;
         return; // Stop the search when the endNode is found
       }
 
-      if (visitedNodes[node.x][node.y]) {
-        console.log(node.x + " aha " + node.y);
-        return;
-      }
-      visitedNodes[node.x][node.y] = true;
-      if (
-        document.getElementById(`${node.x},${node.y}`).style.backgroundColor !==
-        "rgb(153, 0, 255)"
-      ) {
-        if (
-          document.getElementById(`${node.x},${node.y}`).style
-            .backgroundColor === "lightgreen"
-        ) {
-          document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
-            "orange";
-        } else {
-          document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
-            "#ff007f";
-        }
-      }
       console.log(node.x + " ihi " + node.y);
       function tryToPushNode(dx, dy) {
         if (
@@ -129,7 +115,7 @@ class Algos {
     }
 
     search(node);
-    return endNode;
+    return [endNode, totalNodesVisited];
   }
 }
 
@@ -250,7 +236,6 @@ const Grid = (props) => {
   function setGrid() {
     for (let i = 0; i < height; i++) {
       let tempArr = [];
-      visitedNodes[i] = [];
       for (let j = 0; j < width; j++) {
         tempArr.push(
           <div
@@ -259,7 +244,6 @@ const Grid = (props) => {
             id={`${j},${i}`}
           ></div>
         );
-        visitedNodes[i][j] = false;
       }
       arrayOfNodes.push(<div className="line">{tempArr}</div>);
     }
@@ -302,7 +286,6 @@ const Grid = (props) => {
 
   useEffect(() => {
     let node = null;
-
     async function Visualize() {
       let g = new AlgoVis();
       let alg = new Algos();
@@ -311,11 +294,14 @@ const Grid = (props) => {
           // This callback is called when BFS traversal is complete
           node = alg.BFS(startX, startY, targetX, targetY, visitedNodes);
           let pathArr = [];
+          let currNode = node[0];
           pathArr.push(node);
-          while (node.prev !== null) {
-            pathArr.push(node.prev);
-            node = node.prev;
+
+          while (currNode.prev !== null) {
+            pathArr.push(currNode.prev);
+            currNode = currNode.prev;
           }
+          props.Stats(node[1], pathArr.length);
           visualizePath(pathArr, true);
         });
       } else if (props.alg === "DFS") {
@@ -326,14 +312,15 @@ const Grid = (props) => {
           Number(targetY),
           visitedNodes
         );
-        console.log(node);
-        if (node) {
+        let currNode = node[0];
+        if (currNode) {
           let pathArr = [];
-          pathArr.push(node);
-          while (node.prev !== null) {
-            pathArr.push(node.prev);
-            node = node.prev;
+          pathArr.push(currNode);
+          while (currNode.prev !== null) {
+            pathArr.push(currNode.prev);
+            currNode = currNode.prev;
           }
+          props.Stats(node[1], pathArr.length);
           visualizePath(pathArr, false, true);
         } else {
           console.log("No path found.");
@@ -344,47 +331,68 @@ const Grid = (props) => {
     async function visualizePath(arr, purple = false, lblue = false) {
       while (arr.length > 0) {
         let node = arr.pop();
-        let i = Number(node.x);
-        let j = Number(node.y);
-        await new Promise((resolve) => {
-          setTimeout(() => {
-            if (
-              document.getElementById(`${i},${j}`).style.backgroundColor !==
-                "red" &&
-              document.getElementById(`${i},${j}`).style.backgroundColor !==
-                "blue"
-            ) {
-              if (purple) {
-                if (
-                  document.getElementById(`${i},${j}`).style.backgroundColor ===
-                  "#3399ff"
-                ) {
-                  document.getElementById(`${i},${j}`).style.backgroundColor =
-                    "red";
-                } else {
-                  document.getElementById(`${i},${j}`).style.backgroundColor =
-                    "rgb(153, 0, 255)";
-                }
-              } else if (lblue) {
-                if (
-                  document.getElementById(`${i},${j}`).style.backgroundColor ===
-                  "rgb(153, 0, 255)"
-                ) {
-                  document.getElementById(`${i},${j}`).style.backgroundColor =
-                    "red";
-                } else {
-                  document.getElementById(`${i},${j}`).style.backgroundColor =
-                    "#3399ff";
+        if (node && node.x !== undefined && node.y !== undefined) {
+          let i = Number(node.x);
+          let j = Number(node.y);
+          await new Promise((resolve) => {
+            setTimeout(() => {
+              if (
+                document.getElementById(`${i},${j}`) &&
+                document.getElementById(`${i},${j}`).style &&
+                document.getElementById(`${i},${j}`).style.backgroundColor !==
+                  "red" &&
+                document.getElementById(`${i},${j}`).style.backgroundColor !==
+                  "blue"
+              ) {
+                if (purple) {
+                  if (
+                    document.getElementById(`${i},${j}`).style
+                      .backgroundColor === "#3399ff"
+                  ) {
+                    document.getElementById(`${i},${j}`).style.backgroundColor =
+                      "red";
+                  } else {
+                    document.getElementById(`${i},${j}`).style.backgroundColor =
+                      "rgb(153, 0, 255)";
+                  }
+                } else if (lblue) {
+                  if (
+                    document.getElementById(`${i},${j}`).style
+                      .backgroundColor === "rgb(153, 0, 255)"
+                  ) {
+                    document.getElementById(`${i},${j}`).style.backgroundColor =
+                      "red";
+                  } else {
+                    document.getElementById(`${i},${j}`).style.backgroundColor =
+                      "#3399ff";
+                  }
                 }
               }
-            }
-            resolve();
-          }, 50);
-        });
+              resolve();
+            }, 50);
+          });
+        }
       }
     }
 
     if (props.StastVis) {
+      for (let i = 0; i < width; i++) {
+        for (let j = 0; j < height; j++) {
+          if (
+            document.getElementById(`${i},${j}`).style.backgroundColor !==
+            "black"
+          ) {
+            document.getElementById(`${i},${j}`).style.backgroundColor =
+              "white";
+          }
+        }
+      }
+      for (let i = 0; i < width; i++) {
+        visitedNodes[i] = [];
+        for (let j = 0; j < height; j++) {
+          visitedNodes[i][j] = false;
+        }
+      }
       Visualize();
     }
   }, [props.StastVis]);

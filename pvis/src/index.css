@@ -1,29 +1,44 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .app {
   display: flex;
   flex-direction: column;
-  align-content: space-between;
-  gap: 10px;
+  gap: 5px;
+}
+
+.algorithm {
+  font-size: 18px;
+  border: none;
+  background-color: rgb(16, 146, 158);
 }
 
 .screen {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  border: 2px solid rgb(0, 173, 182);
-  padding: 10px;
+  justify-content: center;
+  gap: 60px;
+  padding: 20px;
+  font-size: 18px;
   align-items: center;
+  background-color: rgb(16, 146, 158);
+  color: white;
+  font: bolder;
 }
 
 .btn {
-  border: 2px solid rgb(0, 173, 182);
-  border-radius: 9px;
-  padding: 5px;
-  background-color: white;
+  padding: 10px;
+}
+
+.btn:hover {
+  background-color: rgb(46, 180, 180);
+}
+
+.vis {
+  background-color: rgb(180, 46, 169);
 }
 
 .btn:hover {
@@ -33,4 +48,7 @@
 .input {
   display: flex;
   gap: 5px;
+}
+
+.stats {
 }
