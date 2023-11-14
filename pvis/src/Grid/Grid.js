@@ -135,22 +135,23 @@ class Algos {
     toSearch.push(curreNode);
 
     while (toSearch.length > 0) {
-      curreNode = toSearch[0];
+      let currentBestNode = toSearch[0];
       let indexToremove = 0;
 
       for (let i = 1; i < toSearch.length; i++) {
-        if (toSearch[i].tf < curreNode.tf) {
-          curreNode = toSearch[i];
+        const currentNode = toSearch[i];
+
+        if (
+          currentNode.tf < currentBestNode.tf ||
+          (currentNode.tf === currentBestNode.tf &&
+            currentNode.th < currentBestNode.th)
+        ) {
+          currentBestNode = currentNode;
           indexToremove = i;
         }
-
-        if (curreNode.tf === toSearch[i].tf) {
-          if (toSearch[i].th < curreNode.th) {
-            curreNode = toSearch[i];
-            indexToremove = i;
-          }
-        }
       }
+
+      curreNode = currentBestNode;
 
       visitedNodes[curreNode.x][curreNode.y] = true;
       document.getElementById(
@@ -166,45 +167,40 @@ class Algos {
       }
 
       addNeighbors(curreNode, 0, -1);
-      addNeighbors(curreNode, 1, -1);
       addNeighbors(curreNode, 1, 0);
-      addNeighbors(curreNode, 1, 1);
       addNeighbors(curreNode, 0, 1);
-      addNeighbors(curreNode, -1, 1);
       addNeighbors(curreNode, -1, 0);
+      addNeighbors(curreNode, 1, -1);
+
+      addNeighbors(curreNode, 1, 1);
+
+      addNeighbors(curreNode, -1, 1);
+
       addNeighbors(curreNode, -1, -1);
 
       console.log(curreNode.th);
       for (let j = 0; j < curreNode.neighbors.length; j++) {
         let pass = true;
-        let index = 0;
+
         for (let i = 0; i < toSearch.length; i++) {
           if (
             curreNode.neighbors[j].x === toSearch[i].x &&
             curreNode.neighbors[j].y === toSearch[i].y
           ) {
+            if (toSearch[i].tg > curreNode.tg + 1) {
+              // Update the neighbor in toSearch
+              toSearch[i] = curreNode.neighbors[j];
+            }
             pass = false;
-            index = i;
             break;
           }
         }
 
-        if (
-          pass ||
-          toSearch[index].tg >=
-            heuretic(
-              curreNode.neighbors[j].x,
-              curreNode.neighbors[j].y,
-              toSearch[index].x,
-              toSearch[index].y
-            )
-        ) {
-          toSearch[index] = curreNode.neighbors[j];
-          if (pass) {
-            toSearch.push(curreNode.neighbors[j]);
-          }
+        if (pass) {
+          toSearch.push(curreNode.neighbors[j]);
         }
       }
+
       curreNode.neighbors = [];
     }
 
@@ -343,22 +339,62 @@ const Grid = (props) => {
 
   useEffect(() => {
     const handleKeyPress = (event) => {
-      if (event.key === "d" || event.key === "D") {
-        setDraw(!draw);
-        setErase(false);
-      }
       if (event.key === "e" || event.key === "E") {
-        setErase(!erase);
+        setErase((prevErase) => !prevErase);
         setDraw(false);
       }
     };
 
+    const handleMouseDown = (event) => {
+      if (event.button === 0) {
+        setDraw(true);
+      } else if (event.button === 2) {
+        setErase(true);
+        setDraw(false);
+      }
+    };
+
+    const handleMouseUp = (event) => {
+      if (event.button === 0 || event.button === 2) {
+        setDraw(false);
+        setErase(false);
+      }
+    };
+
+    const handleContextMenu = (event) => {
+      // Prevent the default context menu behavior for the right-click
+      event.preventDefault();
+    };
+
+    const handleDragStart = (event) => {
+      // Prevent the default drag-and-drop behavior
+      event.preventDefault();
+    };
+
+    const makeElementsUnselectable = () => {
+      // Select all elements you want to make unselectable and undraggable
+      const elements = document.querySelectorAll(".unselectable");
+
+      // Add the onDragStart event to each element
+      elements.forEach((element) => {
+        element.addEventListener("dragstart", handleDragStart);
+      });
+    };
+
+    makeElementsUnselectable();
+
     document.addEventListener("keydown", handleKeyPress);
+    document.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("contextmenu", handleContextMenu);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyPress); // Clean up the event listener
+      document.removeEventListener("keydown", handleKeyPress);
+      document.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("contextmenu", handleContextMenu);
     };
-  }, [draw, erase]);
+  }, []);
 
   const arrayOfNodes = [];
   const visitedNodes = [];
@@ -369,13 +405,13 @@ const Grid = (props) => {
       for (let j = 0; j < width; j++) {
         tempArr.push(
           <div
-            onMouseMove={() => block(j, i)}
-            className={"node"}
+            onMouseMoveCapture={() => block(j, i)}
+            className={"unselectable node"}
             id={`${j},${i}`}
           ></div>
         );
       }
-      arrayOfNodes.push(<div className="line">{tempArr}</div>);
+      arrayOfNodes.push(<div className=" line">{tempArr}</div>);
     }
     for (let i = 0; i < width; i++) {
       visitedNodes[i] = [];
@@ -472,14 +508,19 @@ const Grid = (props) => {
             currNode = currNode.prev;
           }
           props.Stats(node[1], pathArr.length);
-          visualizePath(pathArr, true);
+          visualizePath(pathArr, false, false, true);
         } else {
           console.log("No path found.");
         }
       }
     }
 
-    async function visualizePath(arr, purple = false, lblue = false) {
+    async function visualizePath(
+      arr,
+      purple = false,
+      lblue = false,
+      lyellow = false
+    ) {
       while (arr.length > 0) {
         let node = arr.pop();
         if (node && node.x !== undefined && node.y !== undefined) {
@@ -496,27 +537,14 @@ const Grid = (props) => {
                   "blue"
               ) {
                 if (purple) {
-                  if (
-                    document.getElementById(`${i},${j}`).style
-                      .backgroundColor === "#3399ff"
-                  ) {
-                    document.getElementById(`${i},${j}`).style.backgroundColor =
-                      "red";
-                  } else {
-                    document.getElementById(`${i},${j}`).style.backgroundColor =
-                      "rgb(153, 0, 255)";
-                  }
+                  document.getElementById(`${i},${j}`).style.backgroundColor =
+                    "rgb(153, 0, 255)";
                 } else if (lblue) {
-                  if (
-                    document.getElementById(`${i},${j}`).style
-                      .backgroundColor === "rgb(153, 0, 255)"
-                  ) {
-                    document.getElementById(`${i},${j}`).style.backgroundColor =
-                      "red";
-                  } else {
-                    document.getElementById(`${i},${j}`).style.backgroundColor =
-                      "#3399ff";
-                  }
+                  document.getElementById(`${i},${j}`).style.backgroundColor =
+                    "#3399ff";
+                } else if (lyellow) {
+                  document.getElementById(`${i},${j}`).style.backgroundColor =
+                    "yellow";
                 }
               }
               resolve();
