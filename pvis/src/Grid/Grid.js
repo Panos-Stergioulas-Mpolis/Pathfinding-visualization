@@ -4,13 +4,14 @@ import "./grid.css";
 import { useEffect } from "react";
 
 class Node {
-  constructor(x, y, prev = null, tg, th, tf) {
+  constructor(x, y, prev = null, tg, th, tf, neighbors) {
     this.x = x;
     this.y = y;
     this.prev = prev;
     this.tg = tg;
     this.th = th;
     this.tf = tf;
+    this.neighbors = [];
   }
 }
 
@@ -54,8 +55,8 @@ class Algos {
       tryToPushNode(0, -1);
       tryToPushNode(1, 0);
       tryToPushNode(0, 1);
-      tryToPushNode(1, -1);
       tryToPushNode(-1, 0);
+      tryToPushNode(1, -1);
       tryToPushNode(1, 1);
       tryToPushNode(-1, 1);
       tryToPushNode(-1, -1);
@@ -121,101 +122,129 @@ class Algos {
 
   ASTAR(sx, sy, tx, ty, visitedNodes) {
     let endNode = null;
-    let inSearch = JSON.parse(JSON.stringify(visitedNodes));
     let totalNodesVisited = 0;
-    let currNode = null;
-    let neighbors = [];
-    let indexToremove = 0;
-    let node = new Node(sx, sy, null, 0);
-    let startTh = calcDistanse(sx, sy, tx, ty);
-    let startTf = node.tg + startTh;
-    node.th = startTh;
-    node.tf = startTf;
+
+    let curreNode = new Node(Number(sx), Number(sy), null, 0);
+
+    let curreNodeTh = heuretic(curreNode.x, curreNode.y, tx, ty);
+    curreNode.th = curreNodeTh;
+
+    curreNode.tf = curreNode.th + 0;
+
     let toSearch = [];
-    toSearch.push(node);
+    toSearch.push(curreNode);
 
     while (toSearch.length > 0) {
-      currNode = toSearch[0];
+      curreNode = toSearch[0];
+      let indexToremove = 0;
+
       for (let i = 1; i < toSearch.length; i++) {
-        if (
-          toSearch[i].tf < currNode.tf ||
-          (toSearch[i].tf === currNode.tf && toSearch[i].th < currNode.th)
-        ) {
-          currNode = toSearch[i];
+        if (toSearch[i].tf < curreNode.tf) {
+          curreNode = toSearch[i];
           indexToremove = i;
         }
-      }
-      totalNodesVisited++;
-      if (currNode.x === Number(tx) && currNode.y === Number(ty)) {
-        endNode = currNode;
-        break;
-      }
-      visitedNodes[currNode.x][currNode.y] = true;
 
-      document.getElementById(
-        `${currNode.x},${currNode.y}`
-      ).style.backgroundColor = "rgb(16, 146, 158)";
-      toSearch.splice(indexToremove, 1);
-      inSearch[currNode.x][currNode.y] = false;
-
-      function addNeighbor(dx, dy) {
-        if (
-          Number(currNode.x + dx) <= 49 &&
-          Number(currNode.x + dx) >= 0 &&
-          Number(currNode.y + dy) <= 14 &&
-          Number(currNode.y + dy) >= 0
-        ) {
-          if (
-            document.getElementById(`${currNode.x + dx},${currNode.y + dy}`)
-              .style.backgroundColor !== "black"
-          ) {
-            if (!visitedNodes[currNode.x + dx][currNode.y + dy]) {
-              let thDist = calcDistanse(
-                currNode.x + dx,
-                currNode.y + dy,
-                tx,
-                ty
-              );
-
-              let tgDist = currNode.tg + 1;
-              let tfDist = tgDist + thDist;
-              let childNode = new Node(
-                currNode.x + dx,
-                currNode.y + dy,
-                currNode,
-                tgDist,
-                thDist,
-                tfDist
-              );
-              neighbors.push(childNode);
-            }
+        if (curreNode.tf === toSearch[i].tf) {
+          if (toSearch[i].th < curreNode.th) {
+            curreNode = toSearch[i];
+            indexToremove = i;
           }
         }
       }
-      addNeighbor(0, -1);
-      addNeighbor(1, -1);
-      addNeighbor(1, 0);
-      addNeighbor(1, 1);
-      addNeighbor(0, 1);
-      addNeighbor(-1, 1);
-      addNeighbor(-1, 0);
-      addNeighbor(-1, -1);
-      console.log("Current Node: ", currNode);
-      console.log("Neighbors: ", neighbors);
-      console.log("toSearch: ", toSearch);
 
-      for (let i = 0; i < neighbors.length; i++) {
-        if (!inSearch[neighbors[i].x][neighbors[i].y]) {
-          toSearch.push(neighbors[i]);
-          inSearch[neighbors[i].x][neighbors[i].y] = true;
+      visitedNodes[curreNode.x][curreNode.y] = true;
+      document.getElementById(
+        `${curreNode.x},${curreNode.y}`
+      ).style.backgroundColor = "rgb(46, 180, 180)";
+      totalNodesVisited++;
+      console.log(toSearch);
+      toSearch.splice(indexToremove, 1);
+      console.log(toSearch);
+      if (curreNode.x === Number(tx) && curreNode.y === Number(ty)) {
+        endNode = curreNode;
+        break;
+      }
+
+      addNeighbors(curreNode, 0, -1);
+      addNeighbors(curreNode, 1, -1);
+      addNeighbors(curreNode, 1, 0);
+      addNeighbors(curreNode, 1, 1);
+      addNeighbors(curreNode, 0, 1);
+      addNeighbors(curreNode, -1, 1);
+      addNeighbors(curreNode, -1, 0);
+      addNeighbors(curreNode, -1, -1);
+
+      console.log(curreNode.th);
+      for (let j = 0; j < curreNode.neighbors.length; j++) {
+        let pass = true;
+        let index = 0;
+        for (let i = 0; i < toSearch.length; i++) {
+          if (
+            curreNode.neighbors[j].x === toSearch[i].x &&
+            curreNode.neighbors[j].y === toSearch[i].y
+          ) {
+            pass = false;
+            index = i;
+            break;
+          }
+        }
+
+        if (
+          pass ||
+          toSearch[index].tg >=
+            heuretic(
+              curreNode.neighbors[j].x,
+              curreNode.neighbors[j].y,
+              toSearch[index].x,
+              toSearch[index].y
+            )
+        ) {
+          toSearch[index] = curreNode.neighbors[j];
+          if (pass) {
+            toSearch.push(curreNode.neighbors[j]);
+          }
         }
       }
-      neighbors = [];
+      curreNode.neighbors = [];
     }
 
-    function calcDistanse(cx, cy, tx, ty) {
-      return 10 * Math.sqrt(Math.pow(tx - cx, 2) + Math.pow(ty - cy, 2));
+    function addNeighbors(node, dx, dy) {
+      if (
+        Number(node.x + dx) <= 49 &&
+        Number(node.x + dx) >= 0 &&
+        Number(node.y + dy) <= 14 &&
+        Number(node.y + dy) >= 0
+      ) {
+        if (
+          document.getElementById(`${node.x + dx},${node.y + dy}`).style
+            .backgroundColor !== "black"
+        ) {
+          if (!visitedNodes[node.x + dx][node.y + dy]) {
+            let nNode = new Node(node.x + dx, node.y + dy, node);
+
+            let nNodeTg = node.tg + heuretic(nNode.x, nNode.y, node.x, node.y);
+            let nNodeTh = heuretic(nNode.x, nNode.y, tx, ty);
+            let nNodeTf = nNodeTg + nNodeTh;
+
+            nNode.tg = nNodeTg;
+            nNode.th = nNodeTh;
+            nNode.tf = nNodeTf;
+
+            node.neighbors.push(nNode);
+          }
+        }
+      }
     }
+
+    function heuretic(curX, curY, targetX, targetY) {
+      return Math.floor(
+        Math.sqrt(
+          Math.pow(Number(curX) - Number(targetX), 2) +
+            Math.pow(Number(curY) - Number(targetY), 2)
+        )
+      );
+    }
+
     return [endNode, totalNodesVisited];
   }
 }
@@ -275,7 +304,7 @@ class AlgoVis {
         changeColorAndPush(-1, 0);
         changeColorAndPush(-1, -1);
 
-        setTimeout(processNextStep, 10); // Continue with the next step after a delay
+        setTimeout(processNextStep, 1); // Continue with the next step after a delay
       }
     }
 
