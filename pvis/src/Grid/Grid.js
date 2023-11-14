@@ -39,10 +39,10 @@ class Algos {
       tryToPushNode(node, 1, 0);
       tryToPushNode(node, 0, 1);
       tryToPushNode(node, -1, 0);
-      tryToPushNode(node, 1, -1);
-      tryToPushNode(node, 1, 1);
-      tryToPushNode(node, -1, 1);
-      tryToPushNode(node, -1, -1);
+      // tryToPushNode(node, 1, -1);
+      // tryToPushNode(node, 1, 1);
+      // tryToPushNode(node, -1, 1);
+      // tryToPushNode(node, -1, -1);
     }
     function tryToPushNode(node, dx, dy) {
       if (
@@ -109,13 +109,16 @@ class Algos {
       }
 
       tryToPushNode(0, -1);
-      tryToPushNode(1, -1);
       tryToPushNode(1, 0);
-      tryToPushNode(1, 1);
       tryToPushNode(0, 1);
-      tryToPushNode(-1, 1);
       tryToPushNode(-1, 0);
-      tryToPushNode(-1, -1);
+      // tryToPushNode(1, -1);
+
+      // tryToPushNode(1, 1);
+
+      // tryToPushNode(-1, 1);
+
+      // tryToPushNode(-1, -1);
       while (list.length > 0) {
         search(list.shift());
       }
@@ -175,13 +178,13 @@ class Algos {
       addNeighbors(curreNode, 1, 0);
       addNeighbors(curreNode, 0, 1);
       addNeighbors(curreNode, -1, 0);
-      addNeighbors(curreNode, 1, -1);
+      // addNeighbors(curreNode, 1, -1);
 
-      addNeighbors(curreNode, 1, 1);
+      // addNeighbors(curreNode, 1, 1);
 
-      addNeighbors(curreNode, -1, 1);
+      // addNeighbors(curreNode, -1, 1);
 
-      addNeighbors(curreNode, -1, -1);
+      // addNeighbors(curreNode, -1, -1);
 
       console.log(curreNode.th);
       for (let j = 0; j < curreNode.neighbors.length; j++) {
@@ -399,15 +402,19 @@ const Grid = (props) => {
       let alg = new Algos();
       if (props.alg === "BFS") {
         node = alg.BFS(startX, startY, targetX, targetY, visitedNodes);
-        let pathArr = [];
         let currNode = node[0];
-        pathArr.push(node);
-        while (currNode.prev !== null) {
-          pathArr.push(currNode.prev);
-          currNode = currNode.prev;
+        if (currNode) {
+          let pathArr = [];
+          pathArr.push(currNode);
+          while (currNode.prev !== null) {
+            pathArr.push(currNode.prev);
+            currNode = currNode.prev;
+          }
+          props.Stats(node[1], pathArr.length);
+          visualizePath(pathArr, true);
+        } else {
+          console.log("No path found.");
         }
-        props.Stats(node[1], pathArr.length);
-        visualizePath(pathArr, true);
       } else if (props.alg === "DFS") {
         node = alg.DFS(
           Number(startX),
