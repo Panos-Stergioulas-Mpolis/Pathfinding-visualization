@@ -73,6 +73,7 @@ function App() {
         clearBoard={clear}
         alg={alg}
         Stats={handleStats}
+        changeVis={setShouldVis}
       />
     </div>
   );
