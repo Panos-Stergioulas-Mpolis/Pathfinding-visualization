@@ -132,7 +132,12 @@ class Algos {
 
     let curreNode = new Node(Number(sx), Number(sy), null, 0);
 
-    let curreNodeTh = heuretic(curreNode.x, curreNode.y, tx, ty);
+    let curreNodeTh = heuretic(
+      Number(curreNode.x),
+      Number(curreNode.y),
+      Number(tx),
+      Number(ty)
+    );
     curreNode.th = curreNodeTh;
 
     curreNode.tf = curreNode.th + 0;
@@ -164,9 +169,9 @@ class Algos {
         `${curreNode.x},${curreNode.y}`
       ).style.backgroundColor = "rgb(46, 180, 180)";
       totalNodesVisited++;
-      console.log(toSearch);
+
       toSearch.splice(indexToremove, 1);
-      console.log(toSearch);
+
       if (curreNode.x === Number(tx) && curreNode.y === Number(ty)) {
         endNode = curreNode;
         break;
@@ -181,7 +186,6 @@ class Algos {
       addNeighbors(curreNode, -1, 1);
       addNeighbors(curreNode, -1, -1);
 
-      console.log(curreNode.th);
       for (let j = 0; j < curreNode.neighbors.length; j++) {
         let pass = true;
 
@@ -190,8 +194,9 @@ class Algos {
             curreNode.neighbors[j].x === toSearch[i].x &&
             curreNode.neighbors[j].y === toSearch[i].y
           ) {
-            if (toSearch[i].tg > curreNode.neighbors[j].tg + 1) {
+            if (toSearch[i].tg > curreNode.neighbors[j].tg) {
               // Update the neighbor in toSearch
+
               toSearch[i] = curreNode.neighbors[j];
             }
             pass = false;
@@ -210,6 +215,7 @@ class Algos {
     function addNeighbors(node, dx, dy) {
       if (
         Number(node.x + dx) <= 49 &&
+        Number(node.x + dx) <= 49 &&
         Number(node.x + dx) >= 0 &&
         Number(node.y + dy) <= 14 &&
         Number(node.y + dy) >= 0
@@ -222,7 +228,13 @@ class Algos {
             let nNode = new Node(node.x + dx, node.y + dy, node);
 
             let nNodeTg = node.tg + 1;
-            let nNodeTh = heuretic(nNode.x, nNode.y, tx, ty);
+
+            let nNodeTh = heuretic(
+              Number(nNode.x),
+              Number(nNode.y),
+              Number(tx),
+              Number(ty)
+            );
             let nNodeTf = nNodeTg + nNodeTh;
 
             nNode.tg = nNodeTg;
@@ -236,9 +248,10 @@ class Algos {
     }
 
     function heuretic(curX, curY, targetX, targetY) {
-      return Math.floor(
-        Math.pow(curX - targetX, 2) + Math.pow(curY - targetY, 2)
-      );
+      let distX = Math.ceil(Math.abs(curX - targetX));
+      let distY = Math.ceil(Math.abs(curY - targetY));
+
+      return Math.max(distX, distY);
     }
 
     return [endNode, totalNodesVisited];
