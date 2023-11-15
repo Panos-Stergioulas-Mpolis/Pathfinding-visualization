@@ -28,8 +28,14 @@ class Algos {
       node = queue.shift();
       visitedNodes[node.x][node.y] = true;
       nodesVisited++;
-      document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
-        "lightgreen";
+      if (
+        (node.x !== sx || node.y !== sy) &&
+        (node.x !== tx || node.y !== ty)
+      ) {
+        document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
+          "lightgreen";
+      }
+
       if (Number(node.x) === Number(tx) && Number(node.y) === Number(ty)) {
         endNode = node;
         break;
@@ -83,8 +89,14 @@ class Algos {
       visitedNodes[node.x][node.y] = true;
       const list = [];
       totalNodesVisited++;
-      document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
-        "#ff007f";
+      if (
+        (node.x !== sx || node.y !== sy) &&
+        (node.x !== tx || node.y !== ty)
+      ) {
+        document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
+          "#ff007f";
+      }
+
       if (node.x === Number(tx) && node.y === Number(ty)) {
         endNode = node;
         return; // Stop the search when the endNode is found
@@ -165,9 +177,15 @@ class Algos {
       curreNode = currentBestNode;
 
       visitedNodes[curreNode.x][curreNode.y] = true;
-      document.getElementById(
-        `${curreNode.x},${curreNode.y}`
-      ).style.backgroundColor = "rgb(46, 180, 180)";
+
+      if (
+        (curreNode.x !== sx || curreNode.y !== sy) &&
+        (curreNode.x !== tx || curreNode.y !== ty)
+      ) {
+        document.getElementById(
+          `${curreNode.x},${curreNode.y}`
+        ).style.backgroundColor = "rgb(46, 180, 180)";
+      }
       totalNodesVisited++;
 
       toSearch.splice(indexToremove, 1);
@@ -248,8 +266,8 @@ class Algos {
     }
 
     function heuretic(curX, curY, targetX, targetY) {
-      let distX = Math.ceil(Math.abs(curX - targetX));
-      let distY = Math.ceil(Math.abs(curY - targetY));
+      let distX = Math.abs(curX - targetX);
+      let distY = Math.abs(curY - targetY);
 
       return Math.max(distX, distY);
     }
@@ -391,10 +409,10 @@ const Grid = (props) => {
 
   useEffect(() => {
     async function change() {
-      document.getElementById(`${startX},${startY}`).style.background =
-        "linear-gradient(240deg, red, purple, green, yellow, blue, black, white, orange)";
-      document.getElementById(`${targetX},${targetY}`).style.background =
-        "linear-gradient(240deg,  red, purple, green, yellow, blue, black, white, magenta)";
+      document.getElementById(`${startX},${startY}`).style.backgroundColor =
+        "red";
+      document.getElementById(`${targetX},${targetY}`).style.backgroundColor =
+        "blue";
     }
 
     change();
@@ -479,12 +497,8 @@ const Grid = (props) => {
           await new Promise((resolve) => {
             setTimeout(() => {
               if (
-                document.getElementById(`${i},${j}`) &&
-                document.getElementById(`${i},${j}`).style &&
-                document.getElementById(`${i},${j}`).style.backgroundColor !==
-                  "red" &&
-                document.getElementById(`${i},${j}`).style.backgroundColor !==
-                  "blue"
+                (node.x !== startX || node.y !== startY) &&
+                (node.x !== targetX || node.y !== targetY)
               ) {
                 if (purple) {
                   document.getElementById(`${i},${j}`).style.backgroundColor =
@@ -512,8 +526,12 @@ const Grid = (props) => {
             document.getElementById(`${i},${j}`).style.backgroundColor !==
             "black"
           ) {
-            document.getElementById(`${i},${j}`).style.backgroundColor =
-              "white";
+            if (
+              (i !== startX || j !== startY) &&
+              (i !== targetX || j !== targetY)
+            )
+              document.getElementById(`${i},${j}`).style.backgroundColor =
+                "white";
           }
         }
       }
