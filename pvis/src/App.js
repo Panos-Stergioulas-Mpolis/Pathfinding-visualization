@@ -11,13 +11,13 @@ function App() {
   const [Ty, setTY] = useState(14);
 
   const [shouldVis, setShouldVis] = useState(false);
-
   const [clear, setCLear] = useState(false);
 
   const [alg, setAlg] = useState("A*");
 
   const [totalNodes, setTOtalNodes] = useState(0);
   const [pathLenght, setPathLength] = useState(0);
+  const [time, setTime] = useState("0");
 
   const handleVisualizeClick = () => {
     setShouldVis(true);
@@ -27,9 +27,10 @@ function App() {
     setCLear(true);
   };
 
-  const handleStats = (x, y) => {
+  const handleStats = (x, y, t) => {
     setTOtalNodes(x);
     setPathLength(y);
+    setTime(t);
   };
 
   return (
@@ -61,8 +62,8 @@ function App() {
           Visualize
         </div>
         <span className="stats">Total Nodes Visited: {totalNodes}</span>
-
         <span className="stats">Total Path Length: {pathLenght}</span>
+        <span className="stats">Time: {time} Seconds</span>
       </div>
       <Grid
         sX={Sx}
@@ -74,6 +75,7 @@ function App() {
         alg={alg}
         Stats={handleStats}
         changeVis={setShouldVis}
+        clear={clear}
       />
     </div>
   );

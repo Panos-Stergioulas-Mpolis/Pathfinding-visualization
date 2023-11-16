@@ -15,40 +15,54 @@ class Node {
   }
 }
 
+const timer = (ms) => new Promise((res) => setTimeout(res, ms));
+
 class Algos {
-  BFS(sx, sy, tx, ty, visitedNodes, width, height) {
+  BFS(sx, sy, tx, ty, visitedNodes, width, height, callback) {
     let nodesVisited = 0;
+    const startTime = performance.now();
     let endNode = null;
     let startNode = new Node(Number(sx), Number(sy));
     let queue = [];
     queue.push(startNode);
     let node = null;
 
-    while (queue.length > 0) {
-      node = queue.shift();
-      visitedNodes[node.x][node.y] = true;
-      nodesVisited++;
-      if (
-        (node.x !== sx || node.y !== sy) &&
-        (node.x !== tx || node.y !== ty)
-      ) {
-        document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
-          "lightgreen";
-      }
+    myLoop();
 
-      if (Number(node.x) === Number(tx) && Number(node.y) === Number(ty)) {
-        endNode = node;
-        break;
-      }
+    async function myLoop() {
+      while (queue.length > 0) {
+        node = queue.shift();
+        visitedNodes[node.x][node.y] = true;
+        nodesVisited++;
+        if (
+          (node.x !== sx || node.y !== sy) &&
+          (node.x !== tx || node.y !== ty)
+        ) {
+          document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
+            "lightgreen";
+        }
 
-      tryToPushNode(node, 0, -1);
-      tryToPushNode(node, 1, 0);
-      tryToPushNode(node, 0, 1);
-      tryToPushNode(node, -1, 0);
-      tryToPushNode(node, 1, -1);
-      tryToPushNode(node, 1, 1);
-      tryToPushNode(node, -1, 1);
-      tryToPushNode(node, -1, -1);
+        if (Number(node.x) === Number(tx) && Number(node.y) === Number(ty)) {
+          const endTime = performance.now();
+          const elapsedTime = endTime - startTime;
+          const elapsedTimeInSeconds = elapsedTime / 1000;
+          const elapsedTimeString = elapsedTimeInSeconds.toString();
+          const matchResult = elapsedTimeString.match(/\d+\.\d{0,2}/);
+          endNode = node;
+          callback(node, nodesVisited, matchResult);
+          break;
+        }
+
+        tryToPushNode(node, 0, -1);
+        tryToPushNode(node, 1, 0);
+        tryToPushNode(node, 0, 1);
+        tryToPushNode(node, -1, 0);
+        tryToPushNode(node, 1, -1);
+        tryToPushNode(node, 1, 1);
+        tryToPushNode(node, -1, 1);
+        tryToPushNode(node, -1, -1);
+        await timer(10);
+      }
     }
     function tryToPushNode(node, dx, dy) {
       if (
@@ -69,76 +83,79 @@ class Algos {
         }
       }
     }
-    return [endNode, nodesVisited];
   }
 
-  DFS(sx, sy, tx, ty, visitedNodes, width, height) {
+  DFS(sx, sy, tx, ty, visitedNodes, width, height, callback) {
     let endNode = null;
     let totalNodesVisited = 0;
-    let node = new Node(sx, sy, null);
+    const startTime = performance.now();
+    let curNode = new Node(sx, sy, null);
+    let stack = [];
+    stack.push(curNode);
 
-    function search(node) {
-      // Check if endNode is already found
-      if (endNode !== null) {
-        return;
-      }
+    myLoop();
 
-      visitedNodes[node.x][node.y] = true;
-      const list = [];
-      totalNodesVisited++;
-      if (
-        (node.x !== sx || node.y !== sy) &&
-        (node.x !== tx || node.y !== ty)
-      ) {
-        document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
-          "#ff007f";
-      }
-
-      if (node.x === Number(tx) && node.y === Number(ty)) {
-        endNode = node;
-        return; // Stop the search when the endNode is found
-      }
-
-      function tryToPushNode(dx, dy) {
+    async function myLoop() {
+      while (stack.length > 0) {
+        curNode = stack.pop();
+        totalNodesVisited++;
+        visitedNodes[curNode.x][curNode.y] = true;
         if (
-          Number(node.x + dx) <= width - 1 &&
-          Number(node.x + dx) >= 0 &&
-          Number(node.y + dy) <= height - 1 &&
-          Number(node.y + dy) >= 0
+          (curNode.x !== Number(sx) || curNode.y !== Number(sy)) &&
+          (curNode.x !== Number(tx) || curNode.y !== Number(ty))
         ) {
-          if (
-            document.getElementById(`${node.x + dx},${node.y + dy}`).style
-              .backgroundColor !== "black"
-          ) {
-            if (!visitedNodes[node.x + dx][node.y + dy]) {
-              list.push(new Node(node.x + dx, node.y + dy, node));
-            }
-          }
+          document.getElementById(
+            `${curNode.x},${curNode.y}`
+          ).style.backgroundColor = "#ff007f";
         }
-      }
 
-      tryToPushNode(0, -1);
-      tryToPushNode(1, 0);
-      tryToPushNode(0, 1);
-      tryToPushNode(-1, 0);
-      tryToPushNode(1, -1);
-      tryToPushNode(1, 1);
-      tryToPushNode(-1, 1);
-      tryToPushNode(-1, -1);
+        if (curNode.x === tx && curNode.y === ty) {
+          const endTime = performance.now();
+          const elapsedTime = endTime - startTime;
+          const elapsedTimeInSeconds = elapsedTime / 1000;
+          const elapsedTimeString = elapsedTimeInSeconds.toString();
+          const matchResult = elapsedTimeString.match(/\d+\.\d{0,2}/);
+          endNode = curNode;
+          callback(curNode, totalNodesVisited, matchResult);
+          break;
+        }
+        addNeighbors(curNode, -1, -1);
+        addNeighbors(curNode, -1, 1);
+        addNeighbors(curNode, 1, 1);
+        addNeighbors(curNode, 1, -1);
+        addNeighbors(curNode, -1, 0);
+        addNeighbors(curNode, 0, 1);
+        addNeighbors(curNode, 1, 0);
+        addNeighbors(curNode, 0, -1);
 
-      while (list.length > 0) {
-        search(list.shift());
+        await timer(10);
       }
     }
 
-    search(node);
-    return [endNode, totalNodesVisited];
+    function addNeighbors(node, dx, dy) {
+      if (
+        Number(node.x + dx) <= width - 1 &&
+        Number(node.x + dx) >= 0 &&
+        Number(node.y + dy) <= height - 1 &&
+        Number(node.y + dy) >= 0
+      ) {
+        if (
+          document.getElementById(`${node.x + dx},${node.y + dy}`).style
+            .backgroundColor !== "black"
+        ) {
+          if (visitedNodes[node.x + dx][node.y + dy] === false) {
+            let nodeChild = new Node(node.x + dx, node.y + dy, node);
+            stack.push(nodeChild);
+          }
+        }
+      }
+    }
   }
 
-  ASTAR(sx, sy, tx, ty, visitedNodes, width, height) {
+  ASTAR(sx, sy, tx, ty, visitedNodes, width, height, callback) {
     let endNode = null;
     let totalNodesVisited = 0;
-
+    const startTime = performance.now();
     let curreNode = new Node(Number(sx), Number(sy), null, 0);
 
     let curreNodeTh = heuretic(
@@ -154,77 +171,88 @@ class Algos {
     let toSearch = [];
     toSearch.push(curreNode);
 
-    while (toSearch.length > 0) {
-      let currentBestNode = toSearch[0];
-      let indexToremove = 0;
+    myLoop();
 
-      for (let i = 1; i < toSearch.length; i++) {
-        const currentNode = toSearch[i];
+    async function myLoop() {
+      while (toSearch.length > 0) {
+        let currentBestNode = toSearch[0];
+        let indexToremove = 0;
 
-        if (
-          currentNode.tf < currentBestNode.tf ||
-          (currentNode.tf === currentBestNode.tf &&
-            currentNode.th < currentBestNode.th)
-        ) {
-          currentBestNode = currentNode;
-          indexToremove = i;
-        }
-      }
+        for (let i = 1; i < toSearch.length; i++) {
+          const currentNode = toSearch[i];
 
-      curreNode = currentBestNode;
-
-      visitedNodes[curreNode.x][curreNode.y] = true;
-
-      if (
-        (curreNode.x !== sx || curreNode.y !== sy) &&
-        (curreNode.x !== tx || curreNode.y !== ty)
-      ) {
-        document.getElementById(
-          `${curreNode.x},${curreNode.y}`
-        ).style.backgroundColor = "rgb(46, 180, 180)";
-      }
-      totalNodesVisited++;
-
-      toSearch.splice(indexToremove, 1);
-
-      if (curreNode.x === Number(tx) && curreNode.y === Number(ty)) {
-        endNode = curreNode;
-        break;
-      }
-
-      addNeighbors(curreNode, 0, -1);
-      addNeighbors(curreNode, 1, 0);
-      addNeighbors(curreNode, 0, 1);
-      addNeighbors(curreNode, -1, 0);
-      addNeighbors(curreNode, 1, -1);
-      addNeighbors(curreNode, 1, 1);
-      addNeighbors(curreNode, -1, 1);
-      addNeighbors(curreNode, -1, -1);
-
-      for (let j = 0; j < curreNode.neighbors.length; j++) {
-        let pass = true;
-
-        for (let i = 0; i < toSearch.length; i++) {
           if (
-            curreNode.neighbors[j].x === toSearch[i].x &&
-            curreNode.neighbors[j].y === toSearch[i].y
+            currentNode.tf < currentBestNode.tf ||
+            (currentNode.tf === currentBestNode.tf &&
+              currentNode.th < currentBestNode.th)
           ) {
-            if (toSearch[i].tg > curreNode.neighbors[j].tg) {
-              // Update the neighbor in toSearch
-
-              toSearch[i] = curreNode.neighbors[j];
-            }
-            pass = false;
-            break;
+            currentBestNode = currentNode;
+            indexToremove = i;
           }
         }
 
-        if (pass) {
-          toSearch.push(curreNode.neighbors[j]);
-        }
-      }
+        curreNode = currentBestNode;
 
-      curreNode.neighbors = [];
+        visitedNodes[curreNode.x][curreNode.y] = true;
+
+        if (
+          (curreNode.x !== sx || curreNode.y !== sy) &&
+          (curreNode.x !== tx || curreNode.y !== ty)
+        ) {
+          document.getElementById(
+            `${curreNode.x},${curreNode.y}`
+          ).style.backgroundColor = "rgb(46, 180, 180)";
+        }
+        totalNodesVisited++;
+
+        toSearch.splice(indexToremove, 1);
+
+        if (curreNode.x === Number(tx) && curreNode.y === Number(ty)) {
+          const endTime = performance.now();
+          const elapsedTime = endTime - startTime;
+          const elapsedTimeInSeconds = elapsedTime / 1000;
+          const elapsedTimeString = elapsedTimeInSeconds.toString();
+          const matchResult = elapsedTimeString.match(/\d+\.\d{0,2}/);
+          endNode = curreNode;
+          callback(endNode, totalNodesVisited, matchResult);
+          break;
+        }
+
+        addNeighbors(curreNode, 0, -1);
+        addNeighbors(curreNode, 1, 0);
+        addNeighbors(curreNode, 0, 1);
+        addNeighbors(curreNode, -1, 0);
+        addNeighbors(curreNode, 1, -1);
+        addNeighbors(curreNode, 1, 1);
+        addNeighbors(curreNode, -1, 1);
+        addNeighbors(curreNode, -1, -1);
+
+        for (let j = 0; j < curreNode.neighbors.length; j++) {
+          let pass = true;
+
+          for (let i = 0; i < toSearch.length; i++) {
+            if (
+              curreNode.neighbors[j].x === toSearch[i].x &&
+              curreNode.neighbors[j].y === toSearch[i].y
+            ) {
+              if (toSearch[i].tg > curreNode.neighbors[j].tg) {
+                // Update the neighbor in toSearch
+
+                toSearch[i] = curreNode.neighbors[j];
+              }
+              pass = false;
+              break;
+            }
+          }
+
+          if (pass) {
+            toSearch.push(curreNode.neighbors[j]);
+          }
+        }
+
+        curreNode.neighbors = [];
+        await timer(10);
+      }
     }
 
     function addNeighbors(node, dx, dy) {
@@ -267,8 +295,6 @@ class Algos {
 
       return Math.max(distX, distY);
     }
-
-    return [endNode, totalNodesVisited];
   }
 }
 
@@ -469,21 +495,22 @@ const Grid = (props) => {
           Number(targetY),
           visitedNodes,
           width,
-          height
-        );
-        let currNode = node[0];
-        if (currNode) {
-          let pathArr = [];
-          pathArr.push(currNode);
-          while (currNode.prev !== null) {
-            pathArr.push(currNode.prev);
-            currNode = currNode.prev;
+          height,
+          function (endNode, visitetesNodes, time) {
+            if (endNode) {
+              let pathArr = [];
+              pathArr.push(endNode);
+              while (endNode.prev !== null) {
+                pathArr.push(endNode.prev);
+                endNode = endNode.prev;
+              }
+              props.Stats(visitetesNodes, pathArr.length, time);
+              visualizePath(pathArr, true);
+            } else {
+              console.log("No path found.");
+            }
           }
-          props.Stats(node[1], pathArr.length);
-          visualizePath(pathArr, true);
-        } else {
-          console.log("No path found.");
-        }
+        );
       } else if (props.alg === "DFS") {
         node = alg.DFS(
           Number(startX),
@@ -492,21 +519,22 @@ const Grid = (props) => {
           Number(targetY),
           visitedNodes,
           width,
-          height
-        );
-        let currNode = node[0];
-        if (currNode) {
-          let pathArr = [];
-          pathArr.push(currNode);
-          while (currNode.prev !== null) {
-            pathArr.push(currNode.prev);
-            currNode = currNode.prev;
+          height,
+          function (endNode, visitetesNodes, time) {
+            if (endNode) {
+              let pathArr = [];
+              pathArr.push(endNode);
+              while (endNode.prev !== null) {
+                pathArr.push(endNode.prev);
+                endNode = endNode.prev;
+              }
+              props.Stats(visitetesNodes, pathArr.length, time);
+              visualizePath(pathArr, false, true);
+            } else {
+              console.log("No path found.");
+            }
           }
-          props.Stats(node[1], pathArr.length);
-          visualizePath(pathArr, false, true);
-        } else {
-          console.log("No path found.");
-        }
+        );
       } else if (props.alg === "A*") {
         node = alg.ASTAR(
           Number(startX),
@@ -515,21 +543,22 @@ const Grid = (props) => {
           Number(targetY),
           visitedNodes,
           width,
-          height
-        );
-        let currNode = node[0];
-        if (currNode) {
-          let pathArr = [];
-          pathArr.push(currNode);
-          while (currNode.prev !== null) {
-            pathArr.push(currNode.prev);
-            currNode = currNode.prev;
+          height,
+          function (endNode, visitetesNodes, time) {
+            if (endNode) {
+              let pathArr = [];
+              pathArr.push(endNode);
+              while (endNode.prev !== null) {
+                pathArr.push(endNode.prev);
+                endNode = endNode.prev;
+              }
+              props.Stats(visitetesNodes, pathArr.length, time);
+              visualizePath(pathArr, false, false, true);
+            } else {
+              console.log("No path found.");
+            }
           }
-          props.Stats(node[1], pathArr.length);
-          visualizePath(pathArr, false, false, true);
-        } else {
-          console.log("No path found.");
-        }
+        );
       }
     }
 
