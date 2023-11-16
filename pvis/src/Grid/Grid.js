@@ -598,7 +598,7 @@ const Grid = (props) => {
       props.changeVis(false);
     }
 
-    if (props.StastVis) {
+    if (props.StartVis) {
       for (let i = 0; i < width; i++) {
         for (let j = 0; j < height; j++) {
           if (
@@ -622,7 +622,25 @@ const Grid = (props) => {
       }
       Visualize();
     }
-  }, [props.StastVis]);
+  }, [props.StartVis]);
+
+  useEffect(() => {
+    if (props.clear) {
+      for (let i = 0; i < width; i++) {
+        for (let j = 0; j < height; j++) {
+          visitedNodes[i][j] = false;
+          if (
+            (i !== startX || j !== startY) &&
+            (i !== targetX || j !== targetY)
+          ) {
+            document.getElementById(`${i},${j}`).style.backgroundColor =
+              "white";
+          }
+        }
+      }
+    }
+    props.shouldClear(false);
+  }, [props.clear]);
 
   return <div className="grid">{arrayOfNodes}</div>;
 };

@@ -70,12 +70,13 @@ function App() {
         sY={Sy}
         tX={Tx}
         tY={Ty}
-        StastVis={shouldVis}
+        StartVis={shouldVis}
         clearBoard={clear}
         alg={alg}
         Stats={handleStats}
         changeVis={setShouldVis}
         clear={clear}
+        shouldClear={setCLear}
       />
     </div>
   );
