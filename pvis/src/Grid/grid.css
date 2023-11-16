@@ -22,6 +22,10 @@
   object-fit: cover;
 }
 
-.yes {
-  background-color: blue;
+.goblue:hover {
+  background-color: blue !important;
+}
+
+.gored:hover {
+  background-color: red !important;
 }

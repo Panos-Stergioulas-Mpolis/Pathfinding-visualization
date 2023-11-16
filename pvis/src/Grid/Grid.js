@@ -16,7 +16,7 @@ class Node {
 }
 
 class Algos {
-  BFS(sx, sy, tx, ty, visitedNodes) {
+  BFS(sx, sy, tx, ty, visitedNodes, width, height) {
     let nodesVisited = 0;
     let endNode = null;
     let startNode = new Node(Number(sx), Number(sy));
@@ -52,9 +52,9 @@ class Algos {
     }
     function tryToPushNode(node, dx, dy) {
       if (
-        Number(node.x + dx) <= 49 &&
+        Number(node.x + dx) <= width - 1 &&
         Number(node.x + dx) >= 0 &&
-        Number(node.y + dy) <= 14 &&
+        Number(node.y + dy) <= height - 1 &&
         Number(node.y + dy) >= 0
       ) {
         if (
@@ -72,7 +72,7 @@ class Algos {
     return [endNode, nodesVisited];
   }
 
-  DFS(sx, sy, tx, ty, visitedNodes) {
+  DFS(sx, sy, tx, ty, visitedNodes, width, height) {
     let endNode = null;
     let totalNodesVisited = 0;
     let node = new Node(sx, sy, null);
@@ -101,9 +101,9 @@ class Algos {
 
       function tryToPushNode(dx, dy) {
         if (
-          Number(node.x + dx) <= 49 &&
+          Number(node.x + dx) <= width - 1 &&
           Number(node.x + dx) >= 0 &&
-          Number(node.y + dy) <= 14 &&
+          Number(node.y + dy) <= height - 1 &&
           Number(node.y + dy) >= 0
         ) {
           if (
@@ -135,7 +135,7 @@ class Algos {
     return [endNode, totalNodesVisited];
   }
 
-  ASTAR(sx, sy, tx, ty, visitedNodes) {
+  ASTAR(sx, sy, tx, ty, visitedNodes, width, height) {
     let endNode = null;
     let totalNodesVisited = 0;
 
@@ -229,10 +229,9 @@ class Algos {
 
     function addNeighbors(node, dx, dy) {
       if (
-        Number(node.x + dx) <= 49 &&
-        Number(node.x + dx) <= 49 &&
+        Number(node.x + dx) <= width - 1 &&
         Number(node.x + dx) >= 0 &&
-        Number(node.y + dy) <= 14 &&
+        Number(node.y + dy) <= height - 1 &&
         Number(node.y + dy) >= 0
       ) {
         if (
@@ -285,21 +284,24 @@ const Grid = (props) => {
   const [draw, setDraw] = useState(false);
   const [erase, setErase] = useState(false);
 
+  const [startPicked, setStartPicked] = useState(false);
+  const [targetPicked, setTargetPicked] = useState(false);
+
   const arrayOfNodes = [];
   const visitedNodes = [];
 
   function block(i, j) {
     if (
       draw === true &&
-      !(j === props.sY && i === props.sX) &&
-      !(j === props.tY && i === props.tX)
+      !(j === startY && i === startX) &&
+      !(j === targetY && i === targetX)
     ) {
       document.getElementById(`${i},${j}`).style.backgroundColor = "black";
     }
     if (
       erase === true &&
-      !(j === props.sY && i === props.sX) &&
-      !(j === props.tY && i === props.tX)
+      !(j === startY && i === startX) &&
+      !(j === targetY && i === targetX)
     ) {
       document.getElementById(`${i},${j}`).style.backgroundColor = "white";
     }
@@ -364,6 +366,34 @@ const Grid = (props) => {
     };
   }, []);
 
+  function handleCLick(i, j) {
+    if (startPicked && (i !== targetX || j !== targetY)) {
+      document.getElementById(`${startX},${startY}`).style.backgroundColor =
+        "white";
+      document.getElementById(`${i},${j}`).style.backgroundColor = "red";
+      setStartX(i);
+      setStartY(j);
+      setStartPicked(false);
+    }
+
+    if (targetPicked && (i !== startX || j !== startY)) {
+      document.getElementById(`${targetX},${targetY}`).style.backgroundColor =
+        "white";
+      document.getElementById(`${i},${j}`).style.backgroundColor = "blue";
+      setTargetX(i);
+      setTargetY(j);
+      setTargetPicked(false);
+    }
+
+    if (i === targetX && j === targetY && (i !== startX || j !== startY)) {
+      setTargetPicked(true);
+    }
+
+    if (i === startX && j === startY && (i !== targetX || j !== targetY)) {
+      setStartPicked(true);
+    }
+  }
+
   function setGrid() {
     for (let i = 0; i < height; i++) {
       let tempArr = [];
@@ -371,7 +401,14 @@ const Grid = (props) => {
         tempArr.push(
           <div
             onMouseMoveCapture={() => block(j, i)}
-            className={"unselectable node"}
+            onClick={() => handleCLick(j, i)}
+            className={
+              startPicked
+                ? "unselectable node gored"
+                : targetPicked
+                ? "unselectable node goblue"
+                : "unselectable node"
+            }
             id={`${j},${i}`}
           ></div>
         );
@@ -426,7 +463,9 @@ const Grid = (props) => {
           Number(startY),
           Number(targetX),
           Number(targetY),
-          visitedNodes
+          visitedNodes,
+          width,
+          height
         );
         let currNode = node[0];
         if (currNode) {
@@ -447,7 +486,9 @@ const Grid = (props) => {
           Number(startY),
           Number(targetX),
           Number(targetY),
-          visitedNodes
+          visitedNodes,
+          width,
+          height
         );
         let currNode = node[0];
         if (currNode) {
@@ -468,7 +509,9 @@ const Grid = (props) => {
           Number(startY),
           Number(targetX),
           Number(targetY),
-          visitedNodes
+          visitedNodes,
+          width,
+          height
         );
         let currNode = node[0];
         if (currNode) {
