@@ -65,9 +65,6 @@ class Algos {
             let nodeChild = new Node(node.x + dx, node.y + dy, node);
             queue.push(nodeChild);
             visitedNodes[node.x + dx][node.y + dy] = true;
-            document.getElementById(
-              `${node.x + dx},${node.y + dy}`
-            ).style.backgroundColor = "lightgreen";
           }
         }
       }
@@ -424,7 +421,13 @@ const Grid = (props) => {
     async function Visualize() {
       let alg = new Algos();
       if (props.alg === "BFS") {
-        node = alg.BFS(startX, startY, targetX, targetY, visitedNodes);
+        node = alg.BFS(
+          Number(startX),
+          Number(startY),
+          Number(targetX),
+          Number(targetY),
+          visitedNodes
+        );
         let currNode = node[0];
         if (currNode) {
           let pathArr = [];
