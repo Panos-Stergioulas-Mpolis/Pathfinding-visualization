@@ -290,6 +290,7 @@ const Grid = (props) => {
   const arrayOfNodes = [];
   const visitedNodes = [];
 
+  // Lets you draw and erase
   function block(i, j) {
     if (
       draw === true &&
@@ -307,6 +308,7 @@ const Grid = (props) => {
     }
   }
 
+  // Handles key and click events
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "e" || event.key === "E") {
@@ -366,6 +368,7 @@ const Grid = (props) => {
     };
   }, []);
 
+  //  Handles the logic when a node (or better a squeare) have been clicked
   function handleCLick(i, j) {
     if (startPicked && (i !== targetX || j !== targetY)) {
       document.getElementById(`${startX},${startY}`).style.backgroundColor =
@@ -394,6 +397,7 @@ const Grid = (props) => {
     }
   }
 
+  // sets the grid
   function setGrid() {
     for (let i = 0; i < height; i++) {
       let tempArr = [];
@@ -425,8 +429,7 @@ const Grid = (props) => {
 
   setGrid();
 
-  useEffect(() => {}, [props.clearBoard]);
-
+  // sets the the start and target
   useEffect(() => {
     async function change() {
       document.getElementById(`${startX},${startY}`).style.background = "white";
@@ -441,6 +444,7 @@ const Grid = (props) => {
     setTargetY(props.tY);
   }, [props.sX, props.sY, props.tX, props.tY]);
 
+  // sets the color of start and target
   useEffect(() => {
     async function change() {
       document.getElementById(`${startX},${startY}`).style.backgroundColor =
