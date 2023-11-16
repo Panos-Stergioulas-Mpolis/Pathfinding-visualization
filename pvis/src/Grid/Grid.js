@@ -98,15 +98,17 @@ class Algos {
     async function myLoop() {
       while (stack.length > 0) {
         curNode = stack.pop();
-        totalNodesVisited++;
-        visitedNodes[curNode.x][curNode.y] = true;
+
         if (
           (curNode.x !== Number(sx) || curNode.y !== Number(sy)) &&
-          (curNode.x !== Number(tx) || curNode.y !== Number(ty))
+          (curNode.x !== Number(tx) || curNode.y !== Number(ty)) &&
+          visitedNodes[curNode.x][curNode.y] !== true
         ) {
           document.getElementById(
             `${curNode.x},${curNode.y}`
           ).style.backgroundColor = "#ff007f";
+          totalNodesVisited++;
+          visitedNodes[curNode.x][curNode.y] = true;
         }
 
         if (curNode.x === tx && curNode.y === ty) {
@@ -528,7 +530,7 @@ const Grid = (props) => {
                 pathArr.push(endNode.prev);
                 endNode = endNode.prev;
               }
-              props.Stats(visitetesNodes, pathArr.length, time);
+              props.Stats(visitetesNodes + 2, pathArr.length, time);
               visualizePath(pathArr, false, true);
             } else {
               console.log("No path found.");
