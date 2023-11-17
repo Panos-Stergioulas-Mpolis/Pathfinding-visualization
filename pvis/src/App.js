@@ -7,8 +7,8 @@ function App() {
   const [Sx, setX] = useState(0);
   const [Sy, setY] = useState(0);
 
-  const [Tx, setTX] = useState(49);
-  const [Ty, setTY] = useState(14);
+  const [Tx, setTX] = useState(79);
+  const [Ty, setTY] = useState(26);
 
   const [shouldVis, setShouldVis] = useState(false);
   const [clear, setCLear] = useState(false);

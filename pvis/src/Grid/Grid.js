@@ -43,13 +43,13 @@ class Algos {
             [
               {
                 transform: "scale(.5)",
-                background: "lightgreen",
+                background: "rgb(111, 255, 0)",
                 opasity: ".5",
               },
               {
-                transform: "scale(1.3)",
-                background: "lightgreen",
-                opasity: "1.3",
+                transform: "scale(1.5)",
+                background: "rgb(4, 157, 63)",
+                opasity: "1.5",
               },
               { transform: "scale(1)", background: "lightgreen", opasity: "1" },
             ],
@@ -94,7 +94,7 @@ class Algos {
       ) {
         if (
           document.getElementById(`${node.x + dx},${node.y + dy}`).style
-            .backgroundColor !== "black"
+            .backgroundColor !== "rgb(0, 0, 66)"
         ) {
           if (visitedNodes[node.x + dx][node.y + dy] === false) {
             let nodeChild = new Node(node.x + dx, node.y + dy, node);
@@ -130,17 +130,17 @@ class Algos {
             [
               {
                 transform: "scale(.5)",
-                background: "#ff007f",
+                background: "#ff00c3",
                 opasity: ".5",
               },
               {
-                transform: "scale(1.3)",
-                background: "#ff007f",
-                opasity: "1.3",
+                transform: "scale(1.5)",
+                background: "#53009c",
+                opasity: "1.5",
               },
               {
                 transform: "scale(1)",
-                background: "#ff007f",
+                background: "#8800ff",
                 opasity: "1",
               },
             ],
@@ -151,7 +151,7 @@ class Algos {
             }
           );
 
-          element.style.backgroundColor = "#ff007f";
+          element.style.backgroundColor = "#8800ff";
           totalNodesVisited++;
           visitedNodes[curNode.x][curNode.y] = true;
         }
@@ -188,7 +188,7 @@ class Algos {
       ) {
         if (
           document.getElementById(`${node.x + dx},${node.y + dy}`).style
-            .backgroundColor !== "black"
+            .backgroundColor !== "rgb(0, 0, 66)"
         ) {
           if (visitedNodes[node.x + dx][node.y + dy] === false) {
             let nodeChild = new Node(node.x + dx, node.y + dy, node);
@@ -254,13 +254,13 @@ class Algos {
             [
               {
                 transform: "scale(.5)",
-                background: "rgb(46, 180, 180)",
+                background: "rgb(55, 255, 0)",
                 opasity: ".5",
               },
               {
-                transform: "scale(1.3)",
-                background: "rgb(46, 180, 180)",
-                opasity: "1.3",
+                transform: "scale(1.5)",
+                background: "rgb(46, 82, 180)",
+                opasity: "1.5",
               },
               {
                 transform: "scale(1)",
@@ -338,7 +338,7 @@ class Algos {
       ) {
         if (
           document.getElementById(`${node.x + dx},${node.y + dy}`).style
-            .backgroundColor !== "black"
+            .backgroundColor !== "rgb(0, 0, 66)"
         ) {
           if (!visitedNodes[node.x + dx][node.y + dy]) {
             let nNode = new Node(node.x + dx, node.y + dy, node);
@@ -373,8 +373,8 @@ class Algos {
 }
 
 const Grid = (props) => {
-  const [width, setWidth] = useState(50);
-  const [height, setHeight] = useState(15);
+  const [width, setWidth] = useState(80);
+  const [height, setHeight] = useState(27);
 
   const [startX, setStartX] = useState(props.sX);
   const [startY, setStartY] = useState(props.sY);
@@ -403,17 +403,17 @@ const Grid = (props) => {
         [
           {
             transform: "scale(.5)",
-            background: "black",
+            background: "rgb(0, 0, 66)",
             opasity: ".5",
           },
           {
             transform: "scale(1.3)",
-            background: "black",
+            background: "rgb(0, 0, 66)",
             opasity: "1.3",
           },
           {
             transform: "scale(1)",
-            background: "black",
+            background: "rgb(0, 0, 66)",
             opasity: "1",
           },
         ],
@@ -424,7 +424,7 @@ const Grid = (props) => {
         }
       );
 
-      element.style.backgroundColor = "black";
+      element.style.backgroundColor = "rgb(0, 0, 66)";
     }
     if (
       erase === true &&
@@ -782,7 +782,7 @@ const Grid = (props) => {
         for (let j = 0; j < height; j++) {
           if (
             document.getElementById(`${i},${j}`).style.backgroundColor !==
-            "black"
+            "rgb(0, 0, 66)"
           ) {
             if (
               (i !== startX || j !== startY) &&
