@@ -38,8 +38,29 @@ class Algos {
           (node.x !== sx || node.y !== sy) &&
           (node.x !== tx || node.y !== ty)
         ) {
-          document.getElementById(`${node.x},${node.y}`).style.backgroundColor =
-            "lightgreen";
+          let element = document.getElementById(`${node.x},${node.y}`);
+          element.animate(
+            [
+              {
+                transform: "scale(.5)",
+                background: "lightgreen",
+                opasity: ".5",
+              },
+              {
+                transform: "scale(1.3)",
+                background: "lightgreen",
+                opasity: "1.3",
+              },
+              { transform: "scale(1)", background: "lightgreen", opasity: "1" },
+            ],
+            {
+              duration: 500,
+              easing: "ease-in-out",
+              fill: "backwards",
+            }
+          );
+
+          element.style.backgroundColor = "lightgreen";
         }
 
         if (Number(node.x) === Number(tx) && Number(node.y) === Number(ty)) {
@@ -104,9 +125,33 @@ class Algos {
           (curNode.x !== Number(tx) || curNode.y !== Number(ty)) &&
           visitedNodes[curNode.x][curNode.y] !== true
         ) {
-          document.getElementById(
-            `${curNode.x},${curNode.y}`
-          ).style.backgroundColor = "#ff007f";
+          let element = document.getElementById(`${curNode.x},${curNode.y}`);
+          element.animate(
+            [
+              {
+                transform: "scale(.5)",
+                background: "#ff007f",
+                opasity: ".5",
+              },
+              {
+                transform: "scale(1.3)",
+                background: "#ff007f",
+                opasity: "1.3",
+              },
+              {
+                transform: "scale(1)",
+                background: "#ff007f",
+                opasity: "1",
+              },
+            ],
+            {
+              duration: 500,
+              easing: "ease-in-out",
+              fill: "backwards",
+            }
+          );
+
+          element.style.backgroundColor = "#ff007f";
           totalNodesVisited++;
           visitedNodes[curNode.x][curNode.y] = true;
         }
@@ -201,9 +246,36 @@ class Algos {
           (curreNode.x !== sx || curreNode.y !== sy) &&
           (curreNode.x !== tx || curreNode.y !== ty)
         ) {
-          document.getElementById(
+          let element = document.getElementById(
             `${curreNode.x},${curreNode.y}`
-          ).style.backgroundColor = "rgb(46, 180, 180)";
+          );
+
+          element.animate(
+            [
+              {
+                transform: "scale(.5)",
+                background: "rgb(46, 180, 180)",
+                opasity: ".5",
+              },
+              {
+                transform: "scale(1.3)",
+                background: "rgb(46, 180, 180)",
+                opasity: "1.3",
+              },
+              {
+                transform: "scale(1)",
+                background: "rgb(46, 180, 180)",
+                opasity: "1",
+              },
+            ],
+            {
+              duration: 500,
+              easing: "ease-in-out",
+              fill: "backwards",
+            }
+          );
+
+          element.style.backgroundColor = "rgb(46, 180, 180)";
         }
         totalNodesVisited++;
 
@@ -325,7 +397,34 @@ const Grid = (props) => {
       !(j === startY && i === startX) &&
       !(j === targetY && i === targetX)
     ) {
-      document.getElementById(`${i},${j}`).style.backgroundColor = "black";
+      let element = document.getElementById(`${i},${j}`);
+
+      element.animate(
+        [
+          {
+            transform: "scale(.5)",
+            background: "black",
+            opasity: ".5",
+          },
+          {
+            transform: "scale(1.3)",
+            background: "black",
+            opasity: "1.3",
+          },
+          {
+            transform: "scale(1)",
+            background: "black",
+            opasity: "1",
+          },
+        ],
+        {
+          duration: 500,
+          easing: "ease-in-out",
+          fill: "backwards",
+        }
+      );
+
+      element.style.backgroundColor = "black";
     }
     if (
       erase === true &&
@@ -582,18 +681,96 @@ const Grid = (props) => {
                 (node.x !== targetX || node.y !== targetY)
               ) {
                 if (purple) {
-                  document.getElementById(`${i},${j}`).style.backgroundColor =
-                    "rgb(153, 0, 255)";
+                  let element = document.getElementById(`${i},${j}`);
+
+                  element.animate(
+                    [
+                      {
+                        transform: "scale(.5)",
+                        background: "rgb(153, 0, 255)",
+                        opasity: ".5",
+                      },
+                      {
+                        transform: "scale(1.3)",
+                        background: "rgb(153, 0, 255)",
+                        opasity: "1.3",
+                      },
+                      {
+                        transform: "scale(1)",
+                        background: "rgb(153, 0, 255)",
+                        opasity: "1",
+                      },
+                    ],
+                    {
+                      duration: 500,
+                      easing: "ease-in-out",
+                      fill: "backwards",
+                    }
+                  );
+
+                  element.style.backgroundColor = "rgb(153, 0, 255)";
                 } else if (lblue) {
-                  document.getElementById(`${i},${j}`).style.backgroundColor =
-                    "#3399ff";
+                  let element = document.getElementById(`${i},${j}`);
+
+                  element.animate(
+                    [
+                      {
+                        transform: "scale(.5)",
+                        background: "#3399ff",
+                        opasity: ".5",
+                      },
+                      {
+                        transform: "scale(1.3)",
+                        background: "#3399ff",
+                        opasity: "1.3",
+                      },
+                      {
+                        transform: "scale(1)",
+                        background: "#3399ff",
+                        opasity: "1",
+                      },
+                    ],
+                    {
+                      duration: 500,
+                      easing: "ease-in-out",
+                      fill: "backwards",
+                    }
+                  );
+
+                  element.style.backgroundColor = "#3399ff";
                 } else if (lyellow) {
-                  document.getElementById(`${i},${j}`).style.backgroundColor =
-                    "yellow";
+                  let element = document.getElementById(`${i},${j}`);
+
+                  element.animate(
+                    [
+                      {
+                        transform: "scale(.5)",
+                        background: "yellow",
+                        opasity: ".5",
+                      },
+                      {
+                        transform: "scale(1.3)",
+                        background: "yellow",
+                        opasity: "1.3",
+                      },
+                      {
+                        transform: "scale(1)",
+                        background: "yellow",
+                        opasity: "1",
+                      },
+                    ],
+                    {
+                      duration: 500,
+                      easing: "ease-in-out",
+                      fill: "backwards",
+                    }
+                  );
+
+                  element.style.backgroundColor = "yellow";
                 }
               }
               resolve();
-            }, 50);
+            }, 20);
           });
         }
       }
