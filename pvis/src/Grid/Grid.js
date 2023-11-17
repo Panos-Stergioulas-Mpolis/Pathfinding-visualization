@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import "./grid.css";
 import { useEffect } from "react";
+import { FaCompressArrowsAlt } from "react-icons/fa";
+import { FaExpandArrowsAlt } from "react-icons/fa";
 
 class Node {
   constructor(x, y, prev = null, tg, th, tf, neighbors) {
@@ -529,20 +531,56 @@ const Grid = (props) => {
     for (let i = 0; i < height; i++) {
       let tempArr = [];
       for (let j = 0; j < width; j++) {
-        tempArr.push(
-          <div
-            onMouseMoveCapture={() => block(j, i)}
-            onClick={() => handleCLick(j, i)}
-            className={
-              startPicked
-                ? "unselectable node gored"
-                : targetPicked
-                ? "unselectable node goblue"
-                : "unselectable node"
-            }
-            id={`${j},${i}`}
-          ></div>
-        );
+        if (j === targetX && i === targetY) {
+          tempArr.push(
+            <div
+              onMouseMoveCapture={() => block(j, i)}
+              onClick={() => handleCLick(j, i)}
+              className={
+                startPicked
+                  ? "unselectable node gored target-div"
+                  : targetPicked
+                  ? "unselectable node goblue target-div"
+                  : "unselectable node target-div"
+              }
+              id={`${j},${i}`}
+            >
+              <FaCompressArrowsAlt className="target" />
+            </div>
+          );
+        } else if (j === startX && i === startY) {
+          tempArr.push(
+            <div
+              onMouseMoveCapture={() => block(j, i)}
+              onClick={() => handleCLick(j, i)}
+              className={
+                startPicked
+                  ? "unselectable node gored start-div"
+                  : targetPicked
+                  ? "unselectable node goblue start-div"
+                  : "unselectable node start-div"
+              }
+              id={`${j},${i}`}
+            >
+              <FaExpandArrowsAlt className="start" />
+            </div>
+          );
+        } else {
+          tempArr.push(
+            <div
+              onMouseMoveCapture={() => block(j, i)}
+              onClick={() => handleCLick(j, i)}
+              className={
+                startPicked
+                  ? "unselectable node gored"
+                  : targetPicked
+                  ? "unselectable node goblue"
+                  : "unselectable node"
+              }
+              id={`${j},${i}`}
+            ></div>
+          );
+        }
       }
       arrayOfNodes.push(<div className=" line">{tempArr}</div>);
     }
@@ -606,7 +644,7 @@ const Grid = (props) => {
                 endNode = endNode.prev;
               }
               props.Stats(visitetesNodes, pathArr.length, time);
-              visualizePath(pathArr, true);
+              visualizePath(pathArr);
             } else {
               console.log("No path found.");
             }
@@ -630,7 +668,7 @@ const Grid = (props) => {
                 endNode = endNode.prev;
               }
               props.Stats(visitetesNodes + 2, pathArr.length, time);
-              visualizePath(pathArr, false, true);
+              visualizePath(pathArr);
             } else {
               console.log("No path found.");
             }
@@ -654,7 +692,7 @@ const Grid = (props) => {
                 endNode = endNode.prev;
               }
               props.Stats(visitetesNodes, pathArr.length, time);
-              visualizePath(pathArr, false, false, true);
+              visualizePath(pathArr);
             } else {
               console.log("No path found.");
             }
@@ -663,12 +701,7 @@ const Grid = (props) => {
       }
     }
 
-    async function visualizePath(
-      arr,
-      purple = false,
-      lblue = false,
-      lyellow = false
-    ) {
+    async function visualizePath(arr) {
       while (arr.length > 0) {
         let node = arr.pop();
         if (node && node.x !== undefined && node.y !== undefined) {
@@ -680,94 +713,34 @@ const Grid = (props) => {
                 (node.x !== startX || node.y !== startY) &&
                 (node.x !== targetX || node.y !== targetY)
               ) {
-                if (purple) {
-                  let element = document.getElementById(`${i},${j}`);
+                let element = document.getElementById(`${i},${j}`);
 
-                  element.animate(
-                    [
-                      {
-                        transform: "scale(.5)",
-                        background: "rgb(153, 0, 255)",
-                        opasity: ".5",
-                      },
-                      {
-                        transform: "scale(1.3)",
-                        background: "rgb(153, 0, 255)",
-                        opasity: "1.3",
-                      },
-                      {
-                        transform: "scale(1)",
-                        background: "rgb(153, 0, 255)",
-                        opasity: "1",
-                      },
-                    ],
+                element.animate(
+                  [
                     {
-                      duration: 500,
-                      easing: "ease-in-out",
-                      fill: "backwards",
-                    }
-                  );
-
-                  element.style.backgroundColor = "rgb(153, 0, 255)";
-                } else if (lblue) {
-                  let element = document.getElementById(`${i},${j}`);
-
-                  element.animate(
-                    [
-                      {
-                        transform: "scale(.5)",
-                        background: "#3399ff",
-                        opasity: ".5",
-                      },
-                      {
-                        transform: "scale(1.3)",
-                        background: "#3399ff",
-                        opasity: "1.3",
-                      },
-                      {
-                        transform: "scale(1)",
-                        background: "#3399ff",
-                        opasity: "1",
-                      },
-                    ],
+                      transform: "scale(.5)",
+                      background: "yellow",
+                      opasity: ".5",
+                    },
                     {
-                      duration: 500,
-                      easing: "ease-in-out",
-                      fill: "backwards",
-                    }
-                  );
-
-                  element.style.backgroundColor = "#3399ff";
-                } else if (lyellow) {
-                  let element = document.getElementById(`${i},${j}`);
-
-                  element.animate(
-                    [
-                      {
-                        transform: "scale(.5)",
-                        background: "yellow",
-                        opasity: ".5",
-                      },
-                      {
-                        transform: "scale(1.3)",
-                        background: "yellow",
-                        opasity: "1.3",
-                      },
-                      {
-                        transform: "scale(1)",
-                        background: "yellow",
-                        opasity: "1",
-                      },
-                    ],
+                      transform: "scale(1.3)",
+                      background: "yellow",
+                      opasity: "1.3",
+                    },
                     {
-                      duration: 500,
-                      easing: "ease-in-out",
-                      fill: "backwards",
-                    }
-                  );
+                      transform: "scale(1)",
+                      background: "yellow",
+                      opasity: "1",
+                    },
+                  ],
+                  {
+                    duration: 500,
+                    easing: "ease-in-out",
+                    fill: "backwards",
+                  }
+                );
 
-                  element.style.backgroundColor = "yellow";
-                }
+                element.style.backgroundColor = "yellow";
               }
               resolve();
             }, 20);
