@@ -45,7 +45,6 @@ function App() {
             }}
           >
             <option>A*</option>
-            <option>Dijkstra</option>
             <option>BFS</option>
             <option>DFS</option>
           </select>

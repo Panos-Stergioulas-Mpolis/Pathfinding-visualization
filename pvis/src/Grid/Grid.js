@@ -46,14 +46,14 @@ class Algos {
               {
                 transform: "scale(.5)",
                 background: "rgb(111, 255, 0)",
-                opasity: ".5",
+                opacity: ".8",
               },
               {
                 transform: "scale(1.5)",
                 background: "rgb(4, 157, 63)",
-                opasity: "1.5",
+                opacity: "1.5",
               },
-              { transform: "scale(1)", background: "lightgreen", opasity: "1" },
+              { transform: "scale(1)", background: "lightgreen", opacity: "1" },
             ],
             {
               duration: 500,
@@ -133,17 +133,17 @@ class Algos {
               {
                 transform: "scale(.5)",
                 background: "#ff00c3",
-                opasity: ".5",
+                opacity: ".8",
               },
               {
                 transform: "scale(1.5)",
                 background: "#53009c",
-                opasity: "1.5",
+                opacity: "1.5",
               },
               {
                 transform: "scale(1)",
                 background: "#8800ff",
-                opasity: "1",
+                opacity: "1",
               },
             ],
             {
@@ -257,17 +257,17 @@ class Algos {
               {
                 transform: "scale(.5)",
                 background: "rgb(55, 255, 0)",
-                opasity: ".5",
+                opacity: ".8",
               },
               {
                 transform: "scale(1.5)",
                 background: "rgb(46, 82, 180)",
-                opasity: "1.5",
+                opacity: "1.5",
               },
               {
                 transform: "scale(1)",
                 background: "rgb(46, 180, 180)",
-                opasity: "1",
+                opacity: "1",
               },
             ],
             {
@@ -406,17 +406,17 @@ const Grid = (props) => {
           {
             transform: "scale(.5)",
             background: "rgb(0, 0, 66)",
-            opasity: ".5",
+            opacity: ".8",
           },
           {
-            transform: "scale(1.3)",
+            transform: "scale(1.5)",
             background: "rgb(0, 0, 66)",
-            opasity: "1.3",
+            opacity: "1.5",
           },
           {
             transform: "scale(1)",
             background: "rgb(0, 0, 66)",
-            opasity: "1",
+            opacity: "1",
           },
         ],
         {
@@ -720,17 +720,17 @@ const Grid = (props) => {
                     {
                       transform: "scale(.5)",
                       background: "yellow",
-                      opasity: ".5",
+                      opacity: ".8",
                     },
                     {
-                      transform: "scale(1.3)",
+                      transform: "scale(1.5)",
                       background: "yellow",
-                      opasity: "1.3",
+                      opacity: "1.5",
                     },
                     {
                       transform: "scale(1)",
                       background: "yellow",
-                      opasity: "1",
+                      opacity: "1",
                     },
                   ],
                   {
