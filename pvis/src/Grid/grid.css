@@ -2,16 +2,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  background-color: white;
   /* background: linear-gradient(45deg, rgb(233, 213, 255), rgb(177, 254, 218)); */
 }
 
 .grid {
   display: flex;
   flex-direction: column;
-  width: 99%;
-  padding-bottom: 5px;
-  margin: auto;
+  padding: 10px;
 }
 
 .target,
@@ -41,4 +39,39 @@
 
 .gored:hover {
   background-color: red !important;
+}
+
+@media screen and (min-width: 1600px) {
+  .node {
+    width: 22px;
+    height: 22px; /* Change the font size to your desired value */
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .node {
+    width: 34px;
+    height: 34px; /* Change the font size to your desired value */
+  }
+}
+
+@media screen and (min-width: 2500px) {
+  .node {
+    width: 36px;
+    height: 36px; /* Change the font size to your desired value */
+  }
+}
+
+@media screen and (min-width: 3000px) {
+  .node {
+    width: 50px;
+    height: 50px; /* Change the font size to your desired value */
+  }
+}
+
+@media screen and (min-width: 3500px) {
+  .node {
+    width: 56px;
+    height: 56px; /* Change the font size to your desired value */
+  }
 }

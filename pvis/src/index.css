@@ -4,12 +4,6 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.app {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
 .algorithm {
   font-size: 18px;
   border: none;
@@ -21,7 +15,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 60px;
-  padding: 20px;
+  padding: 9px;
   font-size: 18px;
   align-items: center;
   background-color: rgb(16, 146, 158);
@@ -48,4 +42,39 @@
 .input {
   display: flex;
   gap: 5px;
+}
+
+.gridAndStats {
+  display: flex;
+  gap: 10px;
+  height: 100vh;
+  background-image: radial-gradient(#520073 10px, transparent 10px),
+    radial-gradient(#520073 10px, transparent 10px);
+  background-size: 26px 26px;
+  background-position: 0 0, 13px 13px;
+  background-color: #0f0033;
+}
+
+@media screen and (min-width: 1600px) {
+  .screen {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .screen {
+    font-size: 30px;
+  }
+}
+
+@media screen and (min-width: 2500px) {
+  .screen {
+    font-size: 40px;
+  }
+}
+
+@media screen and (min-width: 3000px) {
+  .screen {
+    font-size: 50px;
+  }
 }

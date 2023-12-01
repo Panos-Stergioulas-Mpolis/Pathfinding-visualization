@@ -1,14 +1,15 @@
 import React from "react";
 import Grid from "./Grid/Grid";
 import "./index.css";
+import Stats from "./Stats/Stats";
 import { useState } from "react";
 
 function App() {
   const [Sx, setX] = useState(0);
   const [Sy, setY] = useState(0);
 
-  const [Tx, setTX] = useState(79);
-  const [Ty, setTY] = useState(26);
+  const [Tx, setTX] = useState(10);
+  const [Ty, setTY] = useState(10);
 
   const [shouldVis, setShouldVis] = useState(false);
   const [clear, setCLear] = useState(false);
@@ -49,34 +50,29 @@ function App() {
             <option>DFS</option>
           </select>
         </div>
-
-        <div className="btn" onClick={() => window.location.reload(false)}>
-          Reset
-        </div>
-
-        <div className="btn" onClick={handleClearClick}>
-          Clear Board
-        </div>
         <div className="btn vis" onClick={handleVisualizeClick}>
           Visualize
         </div>
-        <span className="stats">Total Nodes Visited: {totalNodes}</span>
-        <span className="stats">Total Path Length: {pathLenght}</span>
-        <span className="stats">Time: {time} Seconds</span>
+        <div className="btn" onClick={handleClearClick}>
+          Clear Board
+        </div>
       </div>
-      <Grid
-        sX={Sx}
-        sY={Sy}
-        tX={Tx}
-        tY={Ty}
-        StartVis={shouldVis}
-        clearBoard={clear}
-        alg={alg}
-        Stats={handleStats}
-        changeVis={setShouldVis}
-        clear={clear}
-        shouldClear={setCLear}
-      />
+      <div className="gridAndStats">
+        <Grid
+          sX={Sx}
+          sY={Sy}
+          tX={Tx}
+          tY={Ty}
+          StartVis={shouldVis}
+          clearBoard={clear}
+          alg={alg}
+          Stats={handleStats}
+          changeVis={setShouldVis}
+          clear={clear}
+          shouldClear={setCLear}
+        />
+        <Stats visNodes={totalNodes} path={pathLenght} time={time} />
+      </div>
     </div>
   );
 }
