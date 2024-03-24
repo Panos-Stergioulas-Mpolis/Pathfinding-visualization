@@ -376,7 +376,7 @@ class Algos {
 
 const Grid = (props) => {
   const [width, setWidth] = useState(50);
-  const [height, setHeight] = useState(18);
+  const [height, setHeight] = useState(19);
 
   const [startX, setStartX] = useState(props.sX);
   const [startY, setStartY] = useState(props.sY);
