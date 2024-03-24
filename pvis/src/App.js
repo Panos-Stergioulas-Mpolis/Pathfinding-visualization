@@ -5,11 +5,11 @@ import Stats from "./Stats/Stats";
 import { useState } from "react";
 
 function App() {
-  const [Sx, setX] = useState(0);
-  const [Sy, setY] = useState(0);
+  const [Sx, setX] = useState(15);
+  const [Sy, setY] = useState(9);
 
-  const [Tx, setTX] = useState(10);
-  const [Ty, setTY] = useState(10);
+  const [Tx, setTX] = useState(35);
+  const [Ty, setTY] = useState(9);
 
   const [shouldVis, setShouldVis] = useState(false);
   const [clear, setCLear] = useState(false);
@@ -71,7 +71,7 @@ function App() {
           clear={clear}
           shouldClear={setCLear}
         />
-        <Stats visNodes={totalNodes} path={pathLenght} time={time} />
+        {/* <Stats visNodes={totalNodes} path={pathLenght} time={time} /> */}
       </div>
     </div>
   );
