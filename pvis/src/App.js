@@ -41,9 +41,6 @@ function App() {
     <div className="app">
       <div className="screen">
         <div className="buttons">
-          <div className="btn vis" onClick={handleVisualizeClick}>
-            Visualize
-          </div>
           <div className="btn clear" onClick={handleClearClick}>
             Clear Board
           </div>
@@ -80,6 +77,9 @@ function App() {
               <option>Medium</option>
               <option>Fast</option>
             </select>
+          </div>
+          <div className="btn vis" onClick={handleVisualizeClick}>
+            Visualize
           </div>
         </div>
         <Stats visNodes={totalNodes} path={pathLenght} time={time} />
