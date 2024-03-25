@@ -5,6 +5,8 @@ import Stats from "./Stats/Stats";
 import { useState } from "react";
 
 function App() {
+  const [speed, setSpeed] = useState(100);
+
   const [Sx, setX] = useState(15);
   const [Sy, setY] = useState(9);
 
@@ -50,6 +52,26 @@ function App() {
             <option>DFS</option>
           </select>
         </div>
+        <div className="speed">
+          <select
+            id="speed"
+            onChange={(e) => {
+              if (e.target.value === "Slow") {
+                setSpeed(100);
+              } else if (e.target.value === "Medium") {
+                setSpeed(50);
+              } else if (e.target.value === "Fast") {
+                setSpeed(10);
+              }
+
+              setShouldVis(false);
+            }}
+          >
+            <option>Slow</option>
+            <option>Medium</option>
+            <option>Fast</option>
+          </select>
+        </div>
         <div className="btn vis" onClick={handleVisualizeClick}>
           Visualize
         </div>
@@ -70,6 +92,7 @@ function App() {
           changeVis={setShouldVis}
           clear={clear}
           shouldClear={setCLear}
+          speed={speed}
         />
         {/* <Stats visNodes={totalNodes} path={pathLenght} time={time} /> */}
       </div>
