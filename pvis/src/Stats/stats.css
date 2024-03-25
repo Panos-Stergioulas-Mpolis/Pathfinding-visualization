@@ -1,50 +1,13 @@
 .stats {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 10px;
+  width: 50%;
+  justify-content: space-around;
+  align-items: center;
+  font-weight: bold;
   color: white;
-  font-size: 15px;
 }
 
 .statsData {
-  font-weight: bold;
-  font-size: 20px;
-  color: rgb(0, 102, 255);
-}
-
-@media screen and (min-width: 1600px) {
-  .stats {
-    font-size: 20px;
-  }
-  .statsData {
-    font-size: 25px;
-  }
-}
-
-@media screen and (min-width: 2000px) {
-  .stats {
-    font-size: 30px;
-  }
-  .statsData {
-    font-size: 35px;
-  }
-}
-
-@media screen and (min-width: 2500px) {
-  .stats {
-    font-size: 40px;
-  }
-  .statsData {
-    font-size: 45px;
-  }
-}
-
-@media screen and (min-width: 3000px) {
-  .stats {
-    font-size: 50px;
-  }
-  .statsData {
-    font-size: 55px;
-  }
+  color: yellow;
+  font-size: 23px;
 }

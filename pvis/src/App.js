@@ -24,6 +24,7 @@ function App() {
 
   const handleVisualizeClick = () => {
     setShouldVis(true);
+    handleStats(0, 0, 0);
   };
 
   const handleClearClick = () => {
@@ -39,45 +40,49 @@ function App() {
   return (
     <div className="app">
       <div className="screen">
-        <div className="algorithm">
-          <select
-            id="algorithm"
-            onChange={(e) => {
-              setAlg(e.target.value);
-              setShouldVis(false);
-            }}
-          >
-            <option>A*</option>
-            <option>BFS</option>
-            <option>DFS</option>
-          </select>
+        <div className="buttons">
+          <div className="btn vis" onClick={handleVisualizeClick}>
+            Visualize
+          </div>
+          <div className="btn clear" onClick={handleClearClick}>
+            Clear Board
+          </div>
+          <div className="algorithm">
+            <select
+              id="algorithm"
+              onChange={(e) => {
+                setAlg(e.target.value);
+                setShouldVis(false);
+                handleStats(0, 0, 0);
+              }}
+            >
+              <option>A*</option>
+              <option>BFS</option>
+              <option>DFS</option>
+            </select>
+          </div>
+          <div className="selec speed">
+            <select
+              id="speed"
+              onChange={(e) => {
+                if (e.target.value === "Slow") {
+                  setSpeed(100);
+                } else if (e.target.value === "Medium") {
+                  setSpeed(50);
+                } else if (e.target.value === "Fast") {
+                  setSpeed(10);
+                }
+                handleStats(0, 0, 0);
+                setShouldVis(false);
+              }}
+            >
+              <option>Slow</option>
+              <option>Medium</option>
+              <option>Fast</option>
+            </select>
+          </div>
         </div>
-        <div className="speed">
-          <select
-            id="speed"
-            onChange={(e) => {
-              if (e.target.value === "Slow") {
-                setSpeed(100);
-              } else if (e.target.value === "Medium") {
-                setSpeed(50);
-              } else if (e.target.value === "Fast") {
-                setSpeed(10);
-              }
-
-              setShouldVis(false);
-            }}
-          >
-            <option>Slow</option>
-            <option>Medium</option>
-            <option>Fast</option>
-          </select>
-        </div>
-        <div className="btn vis" onClick={handleVisualizeClick}>
-          Visualize
-        </div>
-        <div className="btn" onClick={handleClearClick}>
-          Clear Board
-        </div>
+        <Stats visNodes={totalNodes} path={pathLenght} time={time} />
       </div>
       <div className="gridAndStats">
         <Grid
@@ -94,7 +99,6 @@ function App() {
           shouldClear={setCLear}
           speed={speed}
         />
-        {/* <Stats visNodes={totalNodes} path={pathLenght} time={time} /> */}
       </div>
     </div>
   );
