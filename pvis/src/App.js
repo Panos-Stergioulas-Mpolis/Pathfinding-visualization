@@ -68,14 +68,17 @@ function App() {
                   setSpeed(50);
                 } else if (e.target.value === "Fast") {
                   setSpeed(10);
+                } else if (e.target.value === "Very Slow") {
+                  setSpeed(200);
                 }
                 handleStats(0, 0, 0);
                 setShouldVis(false);
               }}
             >
-              <option>Slow</option>
-              <option>Medium</option>
               <option>Fast</option>
+              <option>Medium</option>
+              <option>Slow</option>
+              <option>Very Slow</option>
             </select>
           </div>
           <div className="btn vis" onClick={handleVisualizeClick}>
