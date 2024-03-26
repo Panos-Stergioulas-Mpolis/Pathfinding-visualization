@@ -50,3 +50,98 @@ select {
 select:hover {
   cursor: pointer;
 }
+
+/* Styles for screens smaller than 768px (e.g., smartphones) */
+@media only screen and (max-width: 767px) {
+  .btn {
+    font-size: 14px;
+    padding: 2px;
+  }
+  select {
+    padding: 2px;
+    font-size: 14px;
+  }
+  .screen {
+    font-size: 14px;
+  }
+}
+
+/* Styles for screens between 768px and 991px (e.g., tablets) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .btn {
+    font-size: 16px;
+    padding: 5px;
+  }
+  select {
+    padding: 5px;
+    font-size: 16px;
+  }
+  .screen {
+    font-size: 16px;
+  }
+}
+
+/* Styles for screens larger than 1200px (e.g., large desktops) */
+@media only screen and (min-width: 1200px) {
+  .btn {
+    font-size: 20px;
+  }
+  select {
+    font-size: 20px;
+  }
+  .screen {
+    font-size: 20px;
+  }
+}
+
+/* Styles for screens larger than 1440px (e.g., larger desktops) */
+@media only screen and (min-width: 1440px) {
+  .btn {
+    font-size: 26px;
+  }
+  select {
+    font-size: 26px;
+  }
+  .screen {
+    font-size: 26px;
+  }
+}
+
+/* Styles for screens larger than 1920px (e.g., Full HD desktops) */
+@media only screen and (min-width: 1920px) {
+  .btn {
+    font-size: 33px;
+  }
+  select {
+    font-size: 33px;
+  }
+  .screen {
+    font-size: 33px;
+  }
+}
+
+/* Styles for screens larger than 2560px (e.g., 2K or WQHD displays) */
+@media only screen and (min-width: 2560px) {
+  .btn {
+    font-size: 38px;
+  }
+  select {
+    font-size: 38px;
+  }
+  .screen {
+    font-size: 38px;
+  }
+}
+
+/* Styles for screens larger than 3840px (e.g., 4K displays) */
+@media only screen and (min-width: 3840px) {
+  .btn {
+    font-size: 43px;
+  }
+  .screen {
+    font-size: 43px;
+  }
+  select {
+    font-size: 43px;
+  }
+}

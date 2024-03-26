@@ -11,3 +11,51 @@
   color: yellow;
   font-size: 23px;
 }
+
+@media only screen and (max-width: 767px) {
+  .statsData {
+    font-size: 17px;
+  }
+}
+
+/* Styles for screens between 768px and 991px (e.g., tablets) */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .statsData {
+    font-size: 19px;
+  }
+}
+
+/* Styles for screens larger than 1200px (e.g., large desktops) */
+@media only screen and (min-width: 1200px) {
+  .statsData {
+    font-size: 23px;
+  }
+}
+
+/* Styles for screens larger than 1440px (e.g., larger desktops) */
+@media only screen and (min-width: 1440px) {
+  .statsData {
+    font-size: 29px;
+  }
+}
+
+/* Styles for screens larger than 1920px (e.g., Full HD desktops) */
+@media only screen and (min-width: 1920px) {
+  .statsData {
+    font-size: 36px;
+  }
+}
+
+/* Styles for screens larger than 2560px (e.g., 2K or WQHD displays) */
+@media only screen and (min-width: 2560px) {
+  .statsData {
+    font-size: 41px;
+  }
+}
+
+/* Styles for screens larger than 3840px (e.g., 4K displays) */
+@media only screen and (min-width: 3840px) {
+  .statsData {
+    font-size: 46px;
+  }
+}
