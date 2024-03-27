@@ -15,12 +15,18 @@
   font-weight: bold;
 }
 
-.target-div,
-.start-div {
-  display: flex;
-  overflow: hidden;
-  justify-content: center;
-  align-items: center;
+.circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 360px;
+}
+
+.start {
+  background-color: red;
+}
+
+.target {
+  background-color: blue;
 }
 
 .node {
@@ -32,8 +38,10 @@
 
 .goblue:hover {
   background-color: blue !important;
+  border-radius: 360px;
 }
 
 .gored:hover {
   background-color: red !important;
+  border-radius: 360px;
 }

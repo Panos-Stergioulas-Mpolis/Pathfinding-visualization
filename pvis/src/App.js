@@ -5,7 +5,7 @@ import Stats from "./Stats/Stats";
 import { useState } from "react";
 
 function App() {
-  const [speed, setSpeed] = useState(100);
+  const [speed, setSpeed] = useState(10);
 
   const [Sx, setX] = useState(15);
   const [Sy, setY] = useState(9);
@@ -56,6 +56,9 @@ function App() {
               <option>A*</option>
               <option>BFS</option>
               <option>DFS</option>
+              <option>BUG-0</option>
+              <option>BUG-1</option>
+              <option>BUG-2</option>
             </select>
           </div>
           <div className="selec speed">

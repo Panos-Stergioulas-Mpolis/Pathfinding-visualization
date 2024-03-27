@@ -126,7 +126,6 @@ const Grid = (props) => {
     if (startPicked && (i !== targetX || j !== targetY)) {
       document.getElementById(`${startX},${startY}`).style.backgroundColor =
         "white";
-      document.getElementById(`${i},${j}`).style.backgroundColor = "red";
       setStartX(i);
       setStartY(j);
       setStartPicked(false);
@@ -135,7 +134,6 @@ const Grid = (props) => {
     if (targetPicked && (i !== startX || j !== startY)) {
       document.getElementById(`${targetX},${targetY}`).style.backgroundColor =
         "white";
-      document.getElementById(`${i},${j}`).style.backgroundColor = "blue";
       setTargetX(i);
       setTargetY(j);
       setTargetPicked(false);
@@ -162,14 +160,14 @@ const Grid = (props) => {
               onClick={() => handleCLick(j, i)}
               className={
                 startPicked
-                  ? "unselectable node gored target-div"
+                  ? "unselectable node gored"
                   : targetPicked
-                  ? "unselectable node goblue target-div"
+                  ? "unselectable node goblue"
                   : "unselectable node target-div"
               }
               id={`${j},${i}`}
             >
-              <FaCompressArrowsAlt className="target" />
+              <div className="target circle"></div>
             </div>
           );
         } else if (j === startX && i === startY) {
@@ -186,7 +184,7 @@ const Grid = (props) => {
               }
               id={`${j},${i}`}
             >
-              <FaExpandArrowsAlt className="start" />
+              <div className="start circle"></div>
             </div>
           );
         } else {
@@ -237,9 +235,9 @@ const Grid = (props) => {
   useEffect(() => {
     async function change() {
       document.getElementById(`${startX},${startY}`).style.backgroundColor =
-        "red";
+        "white";
       document.getElementById(`${targetX},${targetY}`).style.backgroundColor =
-        "blue";
+        "white";
     }
 
     change();
