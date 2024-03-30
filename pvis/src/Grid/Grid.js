@@ -7,6 +7,7 @@ import { FaExpandArrowsAlt } from "react-icons/fa";
 import { ASTAR } from "../algorithms/ASTAR";
 import { BFS } from "../algorithms/BFS";
 import { DFS } from "../algorithms/DFS";
+import { BUG0 } from "../algorithms/BUG0";
 
 const Grid = (props) => {
   const [width, setWidth] = useState(50);
@@ -299,6 +300,31 @@ const Grid = (props) => {
         );
       } else if (props.alg === "A*") {
         node = ASTAR(
+          Number(startX),
+          Number(startY),
+          Number(targetX),
+          Number(targetY),
+          visitedNodes,
+          width,
+          height,
+          function (endNode, visitetesNodes, time) {
+            if (endNode) {
+              let pathArr = [];
+              pathArr.push(endNode);
+              while (endNode.prev !== null) {
+                pathArr.push(endNode.prev);
+                endNode = endNode.prev;
+              }
+              props.Stats(visitetesNodes, pathArr.length, time);
+              visualizePath(pathArr);
+            } else {
+              console.log("No path found.");
+            }
+          },
+          props.speed
+        );
+      } else if (props.alg === "BUG-0") {
+        node = BUG0(
           Number(startX),
           Number(startY),
           Number(targetX),
