@@ -52,17 +52,17 @@ export const BUG0 = (
           [
             {
               transform: "scale(.5)",
-              background: "rgb(55, 255, 0)",
+              background: "rgb(255, 60, 16)",
               opacity: ".8",
             },
             {
               transform: "scale(1.5)",
-              background: "rgb(46, 82, 180)",
+              background: "rgb(237, 20, 16)",
               opacity: "1.5",
             },
             {
               transform: "scale(1)",
-              background: "rgb(46, 180, 180)",
+              background: "rgb(237, 60, 16)",
               opacity: "1",
             },
           ],
@@ -73,12 +73,12 @@ export const BUG0 = (
           }
         );
 
-        element.style.backgroundColor = "rgb(46, 180, 180)";
+        element.style.backgroundColor = "rgb(237, 60, 16)";
       }
       totalNodesVisited++;
 
       let d = directionToTarget(curreNode, goal.x, goal.y);
-      console.log("ok1");
+
       if (canMove(d, width, height)) {
         curreNode = d;
         Currdirection = null;
@@ -86,11 +86,14 @@ export const BUG0 = (
         if (Currdirection === null) {
           Currdirection = d;
         }
-        for (let i = 0; i < 8; i++) {
-          console.log("ok2");
+        while (true) {
+          // console.log(curreNode);
+          // console.log(Currdirection);
           if (canMove(Currdirection, width, height)) {
+            let prev = curreNode;
             curreNode = Currdirection;
-            Currdirection = rotateRight(curreNode, Currdirection);
+            curreNode.prev = prev;
+            Currdirection = rotateRight(prev, Currdirection);
             break;
           } else {
             Currdirection = rotateLeft(curreNode, Currdirection);
@@ -160,13 +163,13 @@ const rotateLeft = (node, d) => {
     return new Node(d.x, d.y - 1, node);
   }
   if (node.x > d.x && node.y > d.y) {
-    return new Node(d.x, d.y - 1, node);
+    return new Node(d.x, d.y + 1, node);
   }
   if (node.x < d.x && node.y < d.y) {
     return new Node(d.x, d.y - 1, node);
   }
   if (node.x > d.x && node.y < d.y) {
-    return new Node(d.x, d.y - 1, node);
+    return new Node(d.x + 1, d.y, node);
   }
   if (node.x < d.x && node.y > d.y) {
     return new Node(d.x - 1, d.y, node);
@@ -187,13 +190,13 @@ const rotateRight = (node, d) => {
     return new Node(d.x, d.y + 1, node);
   }
   if (node.x > d.x && node.y > d.y) {
-    return new Node(d.x, d.y + 1, node);
+    return new Node(d.x, d.y - 1, node);
   }
   if (node.x < d.x && node.y < d.y) {
     return new Node(d.x, d.y + 1, node);
   }
   if (node.x > d.x && node.y < d.y) {
-    return new Node(d.x, d.y + 1, node);
+    return new Node(d.x - 1, d.y, node);
   }
   if (node.x < d.x && node.y > d.y) {
     return new Node(d.x + 1, d.y, node);
