@@ -29,9 +29,11 @@ export const BUG0 = (
   let curreNode = new Node(Number(sx), Number(sy), null, 0);
   let goal = new Node(Number(tx), Number(ty), null, 0);
   let Currdirection = null;
+  let flag = false;
   myLoop();
   async function myLoop() {
     while (true) {
+      flag = false;
       if (curreNode.x === goal.x && curreNode.y === goal.y) {
         const endTime = performance.now();
         const elapsedTime = endTime - startTime;
@@ -106,94 +108,102 @@ export const BUG0 = (
           Currdirection = d;
         }
 
-        mySecLoop();
-        async function mySecLoop() {
-          await timer(speed);
-          while (true) {
-            // console.log(curreNode);
-            // console.log(Currdirection);
-            if (canMove(Currdirection, width, height)) {
-              let prev = curreNode;
-              curreNode = Currdirection;
-              curreNode.prev = prev;
-              Currdirection = rotateRight(prev, Currdirection);
-              if (
-                (curreNode.x !== sx || curreNode.y !== sy) &&
-                (curreNode.x !== tx || curreNode.y !== ty)
-              ) {
-                let element = document.getElementById(
-                  `${curreNode.x},${curreNode.y}`
-                );
+        while (true) {
+          flag = false;
+          // console.log(curreNode);
+          // console.log(Currdirection);
+          if (canMove(Currdirection, width, height)) {
+            let prev = curreNode;
+            curreNode = Currdirection;
+            curreNode.prev = prev;
+            Currdirection = rotateRight(prev, Currdirection);
+            if (
+              (curreNode.x !== sx || curreNode.y !== sy) &&
+              (curreNode.x !== tx || curreNode.y !== ty)
+            ) {
+              await timer(speed);
+              let element = document.getElementById(
+                `${curreNode.x},${curreNode.y}`
+              );
 
-                element.animate(
-                  [
-                    {
-                      transform: "scale(.5)",
-                      background: "rgb(255, 60, 16)",
-                      opacity: ".8",
-                    },
-                    {
-                      transform: "scale(1.5)",
-                      background: "rgb(237, 20, 16)",
-                      opacity: "1.5",
-                    },
-                    {
-                      transform: "scale(1)",
-                      background: "rgb(237, 60, 16)",
-                      opacity: "1",
-                    },
-                  ],
+              element.animate(
+                [
                   {
-                    duration: 500,
-                    easing: "ease-in-out",
-                    fill: "backwards",
-                  }
-                );
+                    transform: "scale(.5)",
+                    background: "rgb(255, 60, 16)",
+                    opacity: ".8",
+                  },
+                  {
+                    transform: "scale(1.5)",
+                    background: "rgb(237, 20, 16)",
+                    opacity: "1.5",
+                  },
+                  {
+                    transform: "scale(1)",
+                    background: "rgb(237, 60, 16)",
+                    opacity: "1",
+                  },
+                ],
+                {
+                  duration: 500,
+                  easing: "ease-in-out",
+                  fill: "backwards",
+                }
+              );
 
-                element.style.backgroundColor = "rgb(237, 60, 16)";
-              }
+              element.style.backgroundColor = "rgb(237, 60, 16)";
               totalNodesVisited++;
-
-              if (dir === "Up") {
-                if (curreNode.y > previus.y) {
-                  break;
-                }
-              } else if (dir === "Down") {
-                if (curreNode.y < previus.y) {
-                  break;
-                }
-              } else if (dir === "Left") {
-                if (curreNode.x < previus.x) {
-                  break;
-                }
-              } else if (dir === "Right") {
-                if (curreNode.x > previus.x) {
-                  break;
-                }
-              } else if (dir === "Left-Up") {
-                if (curreNode.x < previus.x && curreNode.y < previus.y) {
-                  break;
-                }
-              } else if (dir === "Left-down") {
-                if (curreNode.x < previus.x && curreNode.y > previus.y) {
-                  break;
-                }
-              } else if (dir === "Right-Up") {
-                if (curreNode.x > previus.x && curreNode.y < previus.y) {
-                  break;
-                }
-              } else if (dir === "Right-down") {
-                if (curreNode.x > previus.x && curreNode.y > previus.y) {
-                  break;
-                }
-              }
-            } else {
-              Currdirection = rotateLeft(curreNode, Currdirection);
             }
+
+            if (dir === "Up") {
+              if (curreNode.y > previus.y) {
+                flag = true;
+                break;
+              }
+            } else if (dir === "Down") {
+              if (curreNode.y < previus.y) {
+                flag = true;
+                break;
+              }
+            } else if (dir === "Left") {
+              if (curreNode.x < previus.x) {
+                flag = true;
+                break;
+              }
+            } else if (dir === "Right") {
+              if (curreNode.x > previus.x) {
+                flag = true;
+                break;
+              }
+            } else if (dir === "Left-Up") {
+              if (curreNode.x < previus.x && curreNode.y < previus.y) {
+                flag = true;
+                break;
+              }
+            } else if (dir === "Left-down") {
+              if (curreNode.x < previus.x && curreNode.y > previus.y) {
+                flag = true;
+                break;
+              }
+            } else if (dir === "Right-Up") {
+              if (curreNode.x > previus.x && curreNode.y < previus.y) {
+                flag = true;
+                break;
+              }
+            } else if (dir === "Right-down") {
+              if (curreNode.x > previus.x && curreNode.y > previus.y) {
+                flag = true;
+                break;
+              }
+            }
+          } else {
+            Currdirection = rotateLeft(curreNode, Currdirection);
           }
         }
       }
-      await timer(speed);
+      if (!flag) {
+        await timer(speed);
+      }
     }
   }
 };
