@@ -10,8 +10,8 @@ import { DFS } from "../algorithms/DFS";
 import { BUG0 } from "../algorithms/BUG0";
 
 const Grid = (props) => {
-  const [width, setWidth] = useState(50);
-  const [height, setHeight] = useState(19);
+  const [width, setWidth] = useState(70);
+  const [height, setHeight] = useState(26);
 
   const [startX, setStartX] = useState(props.sX);
   const [startY, setStartY] = useState(props.sY);

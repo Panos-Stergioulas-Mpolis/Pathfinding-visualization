@@ -156,42 +156,42 @@ export const BUG0 = (
             }
 
             if (dir === "Up") {
-              if (curreNode.y > previus.y) {
+              if (curreNode.y >= d.y) {
                 flag = true;
                 break;
               }
             } else if (dir === "Down") {
-              if (curreNode.y < previus.y) {
+              if (curreNode.y <= d.y) {
                 flag = true;
                 break;
               }
             } else if (dir === "Left") {
-              if (curreNode.x < previus.x) {
+              if (curreNode.x <= d.x) {
                 flag = true;
                 break;
               }
             } else if (dir === "Right") {
-              if (curreNode.x > previus.x) {
+              if (curreNode.x >= d.x) {
                 flag = true;
                 break;
               }
             } else if (dir === "Left-Up") {
-              if (curreNode.x < previus.x && curreNode.y < previus.y) {
+              if (curreNode.x <= d.x && curreNode.y <= d.y) {
                 flag = true;
                 break;
               }
             } else if (dir === "Left-down") {
-              if (curreNode.x < previus.x && curreNode.y > previus.y) {
+              if (curreNode.x <= d.x && curreNode.y >= d.y) {
                 flag = true;
                 break;
               }
             } else if (dir === "Right-Up") {
-              if (curreNode.x > previus.x && curreNode.y < previus.y) {
+              if (curreNode.x >= d.x && curreNode.y <= d.y) {
                 flag = true;
                 break;
               }
             } else if (dir === "Right-down") {
-              if (curreNode.x > previus.x && curreNode.y > previus.y) {
+              if (curreNode.x >= d.x && curreNode.y >= d.y) {
                 flag = true;
                 break;
               }
