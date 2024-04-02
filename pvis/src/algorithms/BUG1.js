@@ -77,7 +77,7 @@ export const BUG1 = (
                 },
                 {
                   transform: "scale(1)",
-                  background: "rgb(0, 0, 128)",
+                  background: "rgb(0, 0, 255)",
                   opacity: "1",
                 },
               ],
