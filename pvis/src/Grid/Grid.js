@@ -9,6 +9,7 @@ import { BFS } from "../algorithms/BFS";
 import { DFS } from "../algorithms/DFS";
 import { BUG0 } from "../algorithms/BUG0";
 import { BUG1 } from "../algorithms/BUG1";
+import { BUG2 } from "../algorithms/BUG2";
 
 const Grid = (props) => {
   const [width, setWidth] = useState(70);
@@ -367,6 +368,31 @@ const Grid = (props) => {
                 endNode = endNode.prev;
               }
               props.Stats(visitetesNodes, pathArr.length, time);
+              visualizePath(pathArr);
+            } else {
+              console.log("No path found.");
+            }
+          },
+          props.speed
+        );
+      } else if (props.alg === "BUG-2") {
+        node = BUG2(
+          Number(startX),
+          Number(startY),
+          Number(targetX),
+          Number(targetY),
+          visitedNodes,
+          width,
+          height,
+          function (endNode, visitetesNodes, time) {
+            if (endNode) {
+              let pathArr = [];
+              pathArr.push(endNode);
+              while (endNode.prev !== null) {
+                pathArr.push(endNode.prev);
+                endNode = endNode.prev;
+              }
+              props.Stats(visitetesNodes + 2, pathArr.length, time);
               visualizePath(pathArr);
             } else {
               console.log("No path found.");
