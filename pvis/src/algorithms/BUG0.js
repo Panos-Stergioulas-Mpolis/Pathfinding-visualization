@@ -79,7 +79,6 @@ export const BUG0 = (
       }
       totalNodesVisited++;
 
-      let previus = curreNode;
       let d = directionToTarget(curreNode, goal.x, goal.y);
       let dir = "";
       if (d.x === curreNode.x && d.y > curreNode.y) {
@@ -196,6 +195,10 @@ export const BUG0 = (
                 break;
               }
             }
+
+            if (curreNode.x === goal.x && curreNode.y === goal.y) {
+              break;
+            }
           } else {
             Currdirection = rotateLeft(curreNode, Currdirection);
           }
@@ -203,6 +206,16 @@ export const BUG0 = (
       }
       if (!flag) {
         await timer(speed);
+      }
+      if (curreNode.x === goal.x && curreNode.y === goal.y) {
+        const endTime = performance.now();
+        const elapsedTime = endTime - startTime;
+        const elapsedTimeInSeconds = elapsedTime / 1000;
+        const elapsedTimeString = elapsedTimeInSeconds.toString();
+        const matchResult = elapsedTimeString.match(/\d+\.\d{0,2}/);
+        endNode = curreNode;
+        callback(endNode, totalNodesVisited, matchResult);
+        break;
       }
     }
   }
