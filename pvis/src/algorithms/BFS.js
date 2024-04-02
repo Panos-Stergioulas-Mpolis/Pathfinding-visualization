@@ -47,15 +47,19 @@ export const BFS = (
           [
             {
               transform: "scale(.5)",
-              background: "rgb(111, 255, 0)",
+              background: "rgb(124,252,0)",
               opacity: ".8",
             },
             {
               transform: "scale(1.5)",
-              background: "rgb(4, 157, 63)",
+              background: "rgb(0,255,0)",
               opacity: "1.5",
             },
-            { transform: "scale(1)", background: "lightgreen", opacity: "1" },
+            {
+              transform: "scale(1)",
+              background: "rgb(0,255,127)",
+              opacity: "1",
+            },
           ],
           {
             duration: 500,
@@ -64,7 +68,7 @@ export const BFS = (
           }
         );
 
-        element.style.backgroundColor = "lightgreen";
+        element.style.backgroundColor = "rgb(0,255,127)";
       }
 
       if (Number(node.x) === Number(tx) && Number(node.y) === Number(ty)) {

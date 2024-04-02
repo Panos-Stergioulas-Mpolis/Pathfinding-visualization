@@ -54,17 +54,17 @@ export const BUG0 = (
           [
             {
               transform: "scale(.5)",
-              background: "rgb(255, 60, 16)",
+              background: "rgb(255,215,0)",
               opacity: ".8",
             },
             {
               transform: "scale(1.5)",
-              background: "rgb(237, 20, 16)",
+              background: "rgb(255,165,0)",
               opacity: "1.5",
             },
             {
               transform: "scale(1)",
-              background: "rgb(237, 60, 16)",
+              background: "rgb(255,140,0)",
               opacity: "1",
             },
           ],
@@ -75,7 +75,7 @@ export const BUG0 = (
           }
         );
 
-        element.style.backgroundColor = "rgb(237, 60, 16)";
+        element.style.backgroundColor = "rgb(255,140,0)";
       }
       totalNodesVisited++;
 
@@ -129,17 +129,17 @@ export const BUG0 = (
                 [
                   {
                     transform: "scale(.5)",
-                    background: "rgb(255, 60, 16)",
+                    background: "rgb(255,215,0)",
                     opacity: ".8",
                   },
                   {
                     transform: "scale(1.5)",
-                    background: "rgb(237, 20, 16)",
+                    background: "rgb(255,165,0)",
                     opacity: "1.5",
                   },
                   {
                     transform: "scale(1)",
-                    background: "rgb(237, 60, 16)",
+                    background: "rgb(255,140,0)",
                     opacity: "1",
                   },
                 ],
@@ -150,9 +150,9 @@ export const BUG0 = (
                 }
               );
 
-              element.style.backgroundColor = "rgb(237, 60, 16)";
-              totalNodesVisited++;
+              element.style.backgroundColor = "rgb(255,140,0)";
             }
+            totalNodesVisited++;
 
             if (dir === "Up") {
               if (curreNode.y >= d.y) {

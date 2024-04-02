@@ -75,17 +75,17 @@ export const ASTAR = (
           [
             {
               transform: "scale(.5)",
-              background: "rgb(55, 255, 0)",
+              background: "rgb(255,0,255)",
               opacity: ".8",
             },
             {
               transform: "scale(1.5)",
-              background: "rgb(46, 82, 180)",
+              background: "rgb(186,85,211)",
               opacity: "1.5",
             },
             {
               transform: "scale(1)",
-              background: "rgb(46, 180, 180)",
+              background: "rgb(148,0,211)",
               opacity: "1",
             },
           ],
@@ -96,7 +96,7 @@ export const ASTAR = (
           }
         );
 
-        element.style.backgroundColor = "rgb(46, 180, 180)";
+        element.style.backgroundColor = "rgb(148,0,211)";
       }
       totalNodesVisited++;
 

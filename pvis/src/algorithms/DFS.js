@@ -46,17 +46,17 @@ export const DFS = (
           [
             {
               transform: "scale(.5)",
-              background: "#ff00c3",
+              background: "rgb(0,255,255)",
               opacity: ".8",
             },
             {
               transform: "scale(1.5)",
-              background: "#53009c",
+              background: "rgb(0,206,209)",
               opacity: "1.5",
             },
             {
               transform: "scale(1)",
-              background: "#8800ff",
+              background: "rgb(0,128,128)",
               opacity: "1",
             },
           ],
@@ -67,7 +67,7 @@ export const DFS = (
           }
         );
 
-        element.style.backgroundColor = "#8800ff";
+        element.style.backgroundColor = "rgb(0,128,128)";
         totalNodesVisited++;
         visitedNodes[curNode.x][curNode.y] = true;
       }
